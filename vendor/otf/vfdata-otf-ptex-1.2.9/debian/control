@@ -1,0 +1,14 @@
+Source: otf
+Section: tex
+Priority: extra
+Maintainer: Hisashi MORITA <hisashim@users.sourceforge.net>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
+
+Package: vfdata-otf-ptex
+Architecture: any
+Depends: ptex-bin, dvipdfmx
+Recommends: cmap-adobe-japan1, cmap-adobe-japan2, cmap-adobe-gb1, cmap-adobe-cns1, cmap-adobe-korea1
+Suggests: okumura-clsfiles, gs-esp
+Description: Virtual font files and macros to use OpenType fonts in pTeX
+ Contains VF/TFM/OFM for OpenType fonts and otf.sty style file.

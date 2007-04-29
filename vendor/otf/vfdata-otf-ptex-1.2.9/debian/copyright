@@ -1,0 +1,31 @@
+This package was debianized by Hisashi MORITA <hisashim@users.sourceforge.net> on
+Mon, 30 Apr 2007 02:46:16 +0900.
+
+It was downloaded from ftp://akagi.ms.u-tokyo.ac.jp/pub/TeX/win32/otf.tar.bz2
+
+Upstream Author: Shuzaburo SAITO (author), Akira KAKUTO (packager)
+
+Copyright: not found in upstream source
+
+License:
+
+The following is excerpt from otfstable.zip:otfstable/readme.txt:
+
+----
+【使用許諾】
+本パッケージのインストールまたは使用に関連して使用者に直接的または間接的に発生する一切の損害
+（ハードウェア、他のソフトウェアの破損、不具合等を含む。また、通常損害、特別損害、結果損害を
+問わない）および第三者からなされる請求について著作権者は一切責任を負担しません。
+本パッケージを使用して得られる結果は、商用、非商用に関わらず無償で使用することが可能です。
+自己責任で使用してください。本パッケージを使用した場合、上記の記載事項に同意したものと見なし
+ます。
+
+【再配布】
+自由に行なって下さって結構です．
+----
+
+Rough translation: "No warranty at all, use at your own risk. You agree
+to this by using this software. Redistribute freely."
+
+The Debian packaging is (C) 2007, Hisashi MORITA <hisashim@users.sourceforge.net> and
+is licensed under public domain.
