@@ -37,7 +37,7 @@ build-stamp: configure-stamp
 	dh_testdir
 
 	# Add here commands to compile the package.
-	$(MAKE)
+	#$(MAKE)
 	#docbook-to-man debian/vfdata-otf-ptex.sgml > vfdata-otf-ptex.1
 
 	touch $@
@@ -49,7 +49,7 @@ clean:
 	rm -f build-stamp configure-stamp
 
 	# Add here commands to clean up after the build process.
-	-$(MAKE) clean
+	#-$(MAKE) clean
 
 	dh_clean 
 	-$(MAKE) cleanunpackedupstreampackage
@@ -78,9 +78,6 @@ install: build
 # Build architecture-independent files here.
 binary-indep: build install
 # We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
@@ -109,6 +106,9 @@ binary-arch: build install
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
+
+# Build architecture-dependent files here.
+binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure

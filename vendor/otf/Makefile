@@ -11,5 +11,7 @@ pbuilder-build:
 debuild:
 	(cd $(DIR) && time sudo debuild -us -uc | tee ../debuild.log; cd -)
 clean:
-	(cd $(DIR) && sudo debuild clean; cd -)
 	-rm -f debuild.log pbuilder-build.log
+	(cd $(DIR) && sudo debuild clean; cd -)
+distclean: clean
+	-rm *.dsc *.diff.gz  *.build *.changes *.deb
