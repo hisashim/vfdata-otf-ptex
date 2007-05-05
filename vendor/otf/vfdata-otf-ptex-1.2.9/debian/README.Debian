@@ -71,8 +71,8 @@ Update TeX resource database.
 
 Prepare some LaTeX document.
 
-  $ $EDITOR test.tex
-  $ cat test.tex
+  $ $EDITOR testotf.tex
+  $ cat testotf.tex
   \documentclass{jbook}
   \usepackage{otf}
   \begin{document}
@@ -81,9 +81,9 @@ Prepare some LaTeX document.
 
 Compile the document and generate PDF.
 
-  $ platex test.tex
-  $ dvipdfmx -f my-pseudo-otf test.dvi
-  $ acroread test.pdf &
+  $ platex testotf.tex
+  $ dvipdfmx -f my-pseudo-otf testotf.dvi
+  $ acroread testotf.pdf &
 
 Check File > Document Property > Font in Acroread.  Since Ryumin is
 specified but not embedded, Kozuka built into Acroread will be used for
@@ -93,7 +93,7 @@ Cleanup.
 
   $ sudo rm /etc/texmf/dvipdfm/my-pseudo-otf.map
   $ sudo mktexlsr
-  $ rm test.{tex,aux,log,dvi,pdf}
+  $ rm testotf.{tex,aux,log,dvi,pdf}
 
 Testing (with OTF fonts)
 ------------------------
@@ -125,8 +125,8 @@ fonts". In such cases, try "other binary files" instead.
 
 Compile and see.
 
-  $ platex test.tex
-  $ dvipdfmx -f hiraginox test.dvi
-  $ acroread test.pdf &
+  $ platex testotf.tex
+  $ dvipdfmx -f hiraginox testotf.dvi
+  $ acroread testotf.pdf &
 
 This time, you will see Hiragino embedded right.
