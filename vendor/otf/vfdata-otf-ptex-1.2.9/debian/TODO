@@ -1,0 +1,7 @@
+TODO
+====
+
+- More testing.
+- Comform to Debian policy.
+- Use debconf.
+- Debianize hiraprop which is included in the original package as well.

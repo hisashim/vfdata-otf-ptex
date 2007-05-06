@@ -7,8 +7,8 @@ DEBFILE_BASENAME=$(PACKAGE)_$(SOFTWARE_VERSION)-$(PACKAGE_REVISION)
 .PHONY: debuild pbuilder-debuild pbuilder-build pbuilder-test
 DEFAULT: pbuilder-debuild
 pbuilder-build:
-	if [ ! -f ../$(DEBFILE_BASENAME).dsc ]; then echo 'make debuild to generate .dsc.'; fi
-	if [ ! -f ../$(DEBFILE_BASENAME).tar.gz ]; then echo 'make debuild to generate .tar.gz.'; fi
+	if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'make debuild to generate .dsc.'; fi
+	if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'make debuild to generate .tar.gz.'; fi
 	(cd $(DIR) \
 	&& BINDMOUNTS="/var/cache/pbuilder/result" \
 	time sudo pbuilder build ../$(DEBFILE_BASENAME).dsc --hookdir ../pbuilder-hooks-build \
