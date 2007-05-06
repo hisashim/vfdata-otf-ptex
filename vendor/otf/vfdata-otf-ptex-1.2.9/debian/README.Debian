@@ -13,13 +13,15 @@ Install the package, if you haven't yet.
 
   $ sudo dpkg -i vfdata-otf-ptex*.deb
 
-Install appropriate cmap(s) that your document will require.
+Note that OTF requires Adobe cmaps, which are in non-free section. Make
+sure to include non-free in your apt lines.
 
   $ sudo $EDITOR /etc/apt/sources.list
+  ...
   $ diff -u /etc/apt/sources.list.bak /etc/apt/sources.list
   -deb http://example.org/pub/linux/debian/debian etch main
   +deb http://example.org/pub/linux/debian/debian etch main contrib non-free
-  $ sudo apt-get update && sudo apt-get install cmap-adobe-japan1
+  $ sudo apt-get update && sudo apt-get upgrade
 
 Configuration
 -------------
@@ -27,6 +29,7 @@ Configuration
 Configure dvipdfmx to recognize cmaps.
 
   $ sudo $EDITOR /etc/texmf/texmf.d/50dvipdfmx.cnf
+  ...
   $ diff -u /etc/texmf/texmf.d/50dvipdfmx.cnf.bak /etc/texmf/texmf.d/50dvipdfmx.cnf
    %% READ /usr/share/doc/dvipdfmx/README.Debian for details:
   -% CMAPINPUTS = .;/usr/share/fonts/cmap/adobe-gb1//;/usr/share/fonts/cmap/adobe-cns1//;/usr/share/fonts/cmap/gs-cjk-resource//
@@ -71,19 +74,21 @@ Update TeX resource database.
 
 Prepare some LaTeX document.
 
-  $ $EDITOR testotf.tex
-  $ cat testotf.tex
+  $ $EDITOR myotftest.tex
+  $ cat myotftest.tex
   \documentclass{jbook}
   \usepackage{otf}
   \begin{document}
-  OpenTypeフォントを使うためのOTFパッケージのテストです。
+  OpenTypeフォントを使うためのOTFパッケージのテストです。 \\
+  森\UTF{9DD7}外（區＋鳥） \\
+  内田百\UTF{9592}（門＋月） \\
   \end{document}
 
 Compile the document and generate PDF.
 
-  $ platex testotf.tex
+  $ platex myotftest.tex
   $ dvipdfmx -f my-pseudo-otf testotf.dvi
-  $ acroread testotf.pdf &
+  $ acroread myotftest.pdf &
 
 Check File > Document Property > Font in Acroread.  Since Ryumin is
 specified but not embedded, Kozuka built into Acroread will be used for
@@ -93,7 +98,7 @@ Cleanup.
 
   $ sudo rm /etc/texmf/dvipdfm/my-pseudo-otf.map
   $ sudo mktexlsr
-  $ rm testotf.{tex,aux,log,dvi,pdf}
+  $ rm myotftest.{tex,aux,log,dvi,pdf}
 
 Testing (with OTF fonts)
 ------------------------
@@ -125,8 +130,8 @@ fonts". In such cases, try "other binary files" instead.
 
 Compile and see.
 
-  $ platex testotf.tex
-  $ dvipdfmx -f hiraginox testotf.dvi
-  $ acroread testotf.pdf &
+  $ platex myotftest.tex
+  $ dvipdfmx -f hiraginox myotftest.dvi
+  $ acroread myotftest.pdf &
 
-This time, you will see Hiragino embedded right.
+This time, you will see Hiragino is embedded right.

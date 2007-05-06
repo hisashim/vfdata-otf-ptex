@@ -8,6 +8,7 @@ DEBFILE_BASENAME=$(PACKAGE)_$(SOFTWARE_VERSION)-$(PACKAGE_REVISION)
 DEFAULT: pbuilder-debuild
 pbuilder-build:
 	if [ ! -f ../$(DEBFILE_BASENAME).dsc ]; then echo 'make debuild to generate .dsc.'; fi
+	if [ ! -f ../$(DEBFILE_BASENAME).tar.gz ]; then echo 'make debuild to generate .tar.gz.'; fi
 	(cd $(DIR) \
 	&& BINDMOUNTS="/var/cache/pbuilder/result" \
 	time sudo pbuilder build ../$(DEBFILE_BASENAME).dsc --hookdir ../pbuilder-hooks-build \
@@ -18,6 +19,11 @@ pbuilder-test:
 	&& time sudo pbuilder \
 	  execute --hookdir ../pbuilder-hooks-test --bindmounts "/var/cache/pbuilder/result" \
 	  -- ../pbuilder-hooks-test/test.sh $(DEBFILE_BASENAME) \
+	| tee ../$@.log; \
+	cd -)
+pbuilder-login:
+	(cd $(DIR) \
+	&& time sudo pbuilder login --bindmounts "/var/cache/pbuilder/result" \
 	| tee ../$@.log; \
 	cd -)
 debuild:

@@ -7,9 +7,11 @@ if [ -n "$1" ]
 fi
 
 echo "### Editing apt lines..."
+cp /etc/apt/sources.list{,.bak}
 echo 'deb http://ftp.jp.debian.org/debian etch main contrib non-free' >> /etc/apt/sources.list
 echo "### /etc/apt/sources.list"
-cat /etc/apt/sources.list
+diff -u /etc/apt/sources.list{.bak,}
+apt-get update
 apt-get update
 
 echo "### Installing vfdata-otf-ptex and requirements..."
@@ -19,9 +21,10 @@ echo "### dpkg -l | grep '^ii'"
 dpkg -l | grep '^ii'
 
 echo "### Setting up CMAPs and font maps..."
+cp /etc/texmf/texmf.d/50dvipdfmx.cnf{,.bak}
 echo 'CMAPINPUTS = .;/usr/share/fonts/cmap/adobe-japan1//;/usr/share/fonts/cmap/adobe-japan2//;/usr/share/fonts/cmap/adobe-gb1//;/usr/share/fonts/cmap/adobe-cns1//;/usr/share/fonts/cmap/gs-cjk-resource//' >> /etc/texmf/texmf.d/50dvipdfmx.cnf
 echo "### /etc/texmf/texmf.d/50dvipdfmx.cnf"
-cat /etc/texmf/texmf.d/50dvipdfmx.cnf
+diff -u /etc/texmf/texmf.d/50dvipdfmx.cnf{.bak,}
 update-texmf
 echo '% Non-embedding font map, which works without actual font data.
 % Source: http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?OTF
@@ -50,13 +53,21 @@ echo "### Processing LaTeX document using OTF, without actual font data..."
 echo '\documentclass{jbook}
 \usepackage{otf}
 \begin{document}
-OpenTypeフォントを使うためのOTFパッケージのテストです。
+OpenTypeフォントを使うためのOTFパッケージのテストです。 \\
+森\UTF{9DD7}外（區＋鳥） \\
+内田百\UTF{9592}（門＋月） \\
 \end{document}
-' >> testotf.tex
-echo "### testotf.tex"
-platex testotf.tex && dvipdfmx -f my-pseudo-otf testotf.dvi
+' >> myotftest.tex
+echo "### myotftest.tex"
+platex myotftest.tex && dvipdfmx -f my-pseudo-otf myotftest.dvi
+echo "### Copying myotftest.pdf to /var/cache/pbuilder/result..."
+cp myotftest.pdf /var/cache/pbuilder/result
 
-# echo "### Cleaning up..."
-# rm /etc/texmf/dvipdfm/my-pseudo-otf.map
-# mktexlsr
-# rm testotf.{tex,aux,log,dvi,pdf}
+echo "### Cleaning up..."
+rm /etc/texmf/dvipdfm/my-pseudo-otf.map
+mktexlsr
+rm myotftest.{tex,aux,log,dvi,pdf}
+
+dpkg --remove vfdata-otf-ptex
+dpkg --install /var/cache/pbuilder/result/${DEBFILE_BASENAME}_all.deb
+dpkg --purge vfdata-otf-ptex
