@@ -26,15 +26,30 @@ sure to include non-free in your apt lines.
 Configuration
 -------------
 
-Configure dvipdfmx to recognize cmaps.
+Configure dvipdfmx to recognize cmaps. (Configuration file name seems to
+have changed from 50dvipdfmx.cnf (sarge and before) to 80DVIPDFMx.cnf
+(etch).)
+
+If you have clean installation of etch, there should be nothing you have
+to do, since dvipdfmx is set to search the whole cmap directory tree.
+
+  $ cat /etc/texmf/texmf.d/80DVIPDFMx.cnf
+  % dvipdfmx
+  CMAPINPUTS = .;/usr/share/fonts/cmap//
+
+If you have upgraded from older installation such as sarge, you may have
+to edit the configuration a bit.
 
   $ sudo $EDITOR /etc/texmf/texmf.d/50dvipdfmx.cnf
   ...
   $ diff -u /etc/texmf/texmf.d/50dvipdfmx.cnf.bak /etc/texmf/texmf.d/50dvipdfmx.cnf
    %% READ /usr/share/doc/dvipdfmx/README.Debian for details:
   -% CMAPINPUTS = .;/usr/share/fonts/cmap/adobe-gb1//;/usr/share/fonts/cmap/adobe-cns1//;/usr/share/fonts/cmap/gs-cjk-resource//
-  +CMAPINPUTS = .;/usr/share/fonts/cmap/adobe-japan1//;/usr/share/fonts/cmap/adobe-japan2//;/usr/share/fonts/cmap/adobe-gb1//;/usr/share/fonts/cmap/adobe-cns1//;/usr/share/fonts/cmap/gs-cjk-resource//
+  +CMAPINPUTS = .;/usr/share/fonts/cmap//
   $ sudo update-texmf
+
+Make sure that you have // at the end of the path, which means resursive
+search.
 
 Without appropriate cmaps and correct configuration, you'll get an error
 like this: "Can't find encoding file: H".
@@ -99,6 +114,9 @@ Cleanup.
   $ sudo rm /etc/texmf/dvipdfm/my-pseudo-otf.map
   $ sudo mktexlsr
   $ rm myotftest.{tex,aux,log,dvi,pdf}
+
+Note that my-pseudo-otf.map is a bogus map just for testing. You should
+install physical font for production use.
 
 Testing (with OTF fonts)
 ------------------------

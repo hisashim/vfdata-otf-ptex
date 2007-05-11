@@ -13,7 +13,7 @@ PACKAGE=vfdata-otf-ptex
 TXMF=/usr/share/texmf
 FNTDIR=$(CURDIR)/debian/$(PACKAGE)$(TXMF)/fonts
 MAPDIR=$(CURDIR)/debian/$(PACKAGE)/etc/texmf/dvipdfm
-STYDIR=$(CURDIR)/debian/$(PACKAGE)$(TXMF)/ptex/platex/misc/otf
+STYDIR=$(CURDIR)/debian/$(PACKAGE)$(TXMF)/ptex/platex/misc
 
 CFLAGS = -Wall -g
 
@@ -65,15 +65,20 @@ install: build
 	cp -a share/texmf/fonts/tfm/ptex/otf $(FNTDIR)/tfm/ptex/otf
 	cp -a share/texmf/fonts/vf/ptex/otf $(FNTDIR)/vf/ptex/otf
 	cp -a share/texmf/fonts/ofm/public/otf $(FNTDIR)/ofm/public/otf
-	cp -a share/texmf/doc/misc/otf/cktx.map $(MAPDIR)
-	cp -a share/texmf/doc/misc/otf/hiraginox.map $(MAPDIR)
-	cp -a share/texmf/doc/misc/otf/kozukax.map $(MAPDIR)
-	cp -a share/texmf/doc/misc/otf/morisawax.map $(MAPDIR)
-	cp -a share/texmf/ptex/platex/misc/otf/ajmacros.sty $(STYDIR)
-	cp -a share/texmf/ptex/platex/misc/otf/mlcid.sty $(STYDIR)
-	cp -a share/texmf/ptex/platex/misc/otf/mlutf.sty $(STYDIR)
-	cp -a share/texmf/ptex/platex/misc/otf/otf.sty $(STYDIR)
-	cp -a share/texmf/ptex/platex/misc/otf/redeffont.sty $(STYDIR)
+	cp -a share/texmf/doc/misc/otf/*.map $(MAPDIR)
+	cp -a share/texmf/ptex/platex/misc/otf/ajmacros.sty $(STYDIR)/otf
+	cp -a share/texmf/ptex/platex/misc/otf/mlcid.sty $(STYDIR)/otf
+	cp -a share/texmf/ptex/platex/misc/otf/mlutf.sty $(STYDIR)/otf
+	cp -a share/texmf/ptex/platex/misc/otf/otf.sty $(STYDIR)/otf
+	cp -a share/texmf/ptex/platex/misc/otf/redeffont.sty $(STYDIR)/otf
+	# hiraprop
+	cp -a share/texmf/fonts/tfm/ptex/hiraprop $(FNTDIR)/tfm/ptex/hiraprop
+	cp -a share/texmf/fonts/vf/ptex/hiraprop $(FNTDIR)/vf/ptex/hiraprop
+	cp -a share/texmf/ptex/platex/misc/hiraprop/hiraprop.sty $(STYDIR)/hiraprop
+	cp -a share/texmf/ptex/platex/misc/hiraprop/*.fd $(STYDIR)/hiraprop
+	# install hiraprop docs
+	cp -a share/texmf/doc/misc/hiraprop/*.txt $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/$(PACKAGE)/hiraprop
+	cp -a share/texmf/doc/misc/hiraprop/*.tex $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/$(PACKAGE)/hiraprop
 
 # Build architecture-independent files here.
 binary-indep: build install

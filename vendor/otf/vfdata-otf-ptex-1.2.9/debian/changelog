@@ -1,3 +1,14 @@
+vfdata-otf-ptex (1.2.9-0+0hisashim2) unstable; urgency=low
+
+  * Install hiraprop.
+  * Install non-x font maps, such as hiragino.map.
+  * Change package dependency: Only cmap-adobe-japan1, cmap-adobe-japan2 are in
+    depends:, while other cmaps are moved to recommends:, since this package is
+    for pTeX.
+  * Update README.Debian for etch.
+
+ -- Hisashi MORITA <hisashim@users.sourceforge.net>  Fri, 11 May 2007 22:32:21 +0900
+
 vfdata-otf-ptex (1.2.9-0+0hisashim1) unstable; urgency=low
 
   * Initial release.

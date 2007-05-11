@@ -1,11 +1,26 @@
 # Automation for building Debian package
 PACKAGE=vfdata-otf-ptex
 SOFTWARE_VERSION=1.2.9
-PACKAGE_REVISION=0+0hisashim1
+PACKAGE_REVISION=0+0hisashim2
 DIR=$(PACKAGE)-$(SOFTWARE_VERSION)
 DEBFILE_BASENAME=$(PACKAGE)_$(SOFTWARE_VERSION)-$(PACKAGE_REVISION)
+
+PACKAGE_CL=`head -n 1 $(DIR)/debian/changelog | sed 's/^\(.*\) (\([^)]*\)-\([^)]*\)).*/\1/g'`
+SOFTWARE_VERSION_CL=`head -n 1 $(DIR)/debian/changelog | sed 's/^\(.*\) (\([^)]*\)-\([^)]*\)).*/\2/g'`
+PACKAGE_REVISION_CL=`head -n 1 $(DIR)/debian/changelog | sed 's/^\(.*\) (\([^)]*\)-\([^)]*\)).*/\3/g'`
+
 .PHONY: debuild pbuilder-debuild pbuilder-build pbuilder-test
-DEFAULT: pbuilder-debuild
+.DEFAULT: pbuilder-debuild
+check:
+	if [ "$(PACKAGE)" != "$(PACKAGE_CL)" ]; \
+	then echo "Package name mismatch: Makefile: $(PACKAGE), changelog: $(PACKAGE_REVISION_CL)" \
+	fi
+	if [ "$(SOFTWARE_VERSION)" != "$(SOFTWARE_VERSION_CL)" ]; \
+	then echo "Software version mismatch: Makefile: $(SOFTWARE_VERSION), changelog: $(SOFTWARE_VERSION_CL)" \
+	fi
+	if [ "$(PACKAGE_REVISION)" != "$(PACKAGE_REVISION_CL)" ]; \
+	then echo "Package revision mismatch: Makefile: $(PACKAGE_REVISION), changelog: $(PACKAGE_REVISION_CL)" \
+	fi
 pbuilder-build:
 	if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'make debuild to generate .dsc.'; fi
 	if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'make debuild to generate .tar.gz.'; fi

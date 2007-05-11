@@ -21,10 +21,20 @@ echo "### dpkg -l | grep '^ii'"
 dpkg -l | grep '^ii'
 
 echo "### Setting up CMAPs and font maps..."
-cp /etc/texmf/texmf.d/50dvipdfmx.cnf{,.bak}
-echo 'CMAPINPUTS = .;/usr/share/fonts/cmap/adobe-japan1//;/usr/share/fonts/cmap/adobe-japan2//;/usr/share/fonts/cmap/adobe-gb1//;/usr/share/fonts/cmap/adobe-cns1//;/usr/share/fonts/cmap/gs-cjk-resource//' >> /etc/texmf/texmf.d/50dvipdfmx.cnf
-echo "### /etc/texmf/texmf.d/50dvipdfmx.cnf"
-diff -u /etc/texmf/texmf.d/50dvipdfmx.cnf{.bak,}
+if [ -f /etc/texmf/texmf.d/50dvipdfmx.cnf ]
+then
+  cp /etc/texmf/texmf.d/50dvipdfmx.cnf{,.bak}
+  echo 'CMAPINPUTS = .;/usr/share/fonts/cmap//' >> /etc/texmf/texmf.d/50dvipdfmx.cnf
+  echo "### /etc/texmf/texmf.d/50dvipdfmx.cnf"
+  diff -u /etc/texmf/texmf.d/50dvipdfmx.cnf{.bak,}
+elif [ -f /etc/texmf/texmf.d/80DVIPDFMx.cnf ]
+then
+  echo "### /etc/texmf/texmf.d/80DVIPDFMx.cnf"
+  cat /etc/texmf/texmf.d/80DVIPDFMx.cnf
+else
+  echo "### Neither 50dvipdfmx.cnf or 80DVIPDFMx.cnf found."
+  ls -la /etc/texmf/texmf.d/
+fi
 update-texmf
 echo '% Non-embedding font map, which works without actual font data.
 % Source: http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?OTF
