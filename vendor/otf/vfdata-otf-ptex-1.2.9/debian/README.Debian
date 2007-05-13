@@ -124,7 +124,8 @@ Testing (with OTF fonts)
 Install fonts if you haven't yet (Hiragino is used here for example).
 
   $ sudo mkdir /usr/share/fonts/opentype
-  $ sudo cp HiraMinPro-W3.otf /usr/share/fonts/opentype
+  $ sudo mkdir /usr/share/fonts/opentype/hiragino
+  $ sudo cp HiraMinPro-W3.otf /usr/share/fonts/opentype/hiragino
   ....
 
 Configure directories so that TeX and dviware recognize the fonts.
