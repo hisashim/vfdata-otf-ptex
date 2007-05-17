@@ -1,7 +1,12 @@
 # Automation for building Debian package
+# Required packages: pbuilder devscripts debhelper time (and their requirements)
+# Usage: make debuild
+#        sudo pbuilder create --distribution etch
+#        make pbuilder-build && ls /var/cache/pbuilder/result/*.{dsc,tar.gz,diff.gz,build,changes,deb}
+#        make pbuilder-test && acroread /var/cache/pbuilder/result/myotftest.pdf
 PACKAGE=vfdata-otf-ptex
 SOFTWARE_VERSION=1.2.9
-PACKAGE_REVISION=0+0hisashim2
+PACKAGE_REVISION=0+0hisashim3
 DIR=$(PACKAGE)-$(SOFTWARE_VERSION)
 DEBFILE_BASENAME=$(PACKAGE)_$(SOFTWARE_VERSION)-$(PACKAGE_REVISION)
 
@@ -9,7 +14,7 @@ PACKAGE_CL=`head -n 1 $(DIR)/debian/changelog | sed 's/^\(.*\) (\([^)]*\)-\([^)]
 SOFTWARE_VERSION_CL=`head -n 1 $(DIR)/debian/changelog | sed 's/^\(.*\) (\([^)]*\)-\([^)]*\)).*/\2/g'`
 PACKAGE_REVISION_CL=`head -n 1 $(DIR)/debian/changelog | sed 's/^\(.*\) (\([^)]*\)-\([^)]*\)).*/\3/g'`
 
-.PHONY: debuild pbuilder-debuild pbuilder-build pbuilder-test
+.PHONY: debuild pbuilder-debuild pbuilder-build pbuilder-test check clean distclean
 .DEFAULT: pbuilder-debuild
 check:
 	if [ "$(PACKAGE)" != "$(PACKAGE_CL)" ]; \
@@ -21,7 +26,9 @@ check:
 	if [ "$(PACKAGE_REVISION)" != "$(PACKAGE_REVISION_CL)" ]; \
 	then echo "Package revision mismatch: Makefile: $(PACKAGE_REVISION), changelog: $(PACKAGE_REVISION_CL)" \
 	fi
-pbuilder-build:
+/var/cache/pbuilder/base.tgz:
+	sudo pbuilder create --distribution etch
+pbuilder-build: /var/cache/pbuilder/base.tgz
 	if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'make debuild to generate .dsc.'; fi
 	if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'make debuild to generate .tar.gz.'; fi
 	(cd $(DIR) \
@@ -29,7 +36,7 @@ pbuilder-build:
 	time sudo pbuilder build ../$(DEBFILE_BASENAME).dsc --hookdir ../pbuilder-hooks-build \
 	| tee ../$@.log; \
 	cd -)
-pbuilder-test:
+pbuilder-test: /var/cache/pbuilder/base.tgz
 	(cd $(DIR) \
 	&& time sudo pbuilder \
 	  execute --hookdir ../pbuilder-hooks-test --bindmounts "/var/cache/pbuilder/result" \

@@ -1,3 +1,9 @@
+vfdata-otf-ptex (1.2.9-0+0hisashim3) unstable; urgency=low
+
+  * Fix Makefile adding comments on requirements.
+
+ -- Hisashi MORITA <hisashim@users.sourceforge.net>  Fri, 18 May 2007 03:06:25 +0900
+
 vfdata-otf-ptex (1.2.9-0+0hisashim2) unstable; urgency=low
 
   * Install hiraprop.
