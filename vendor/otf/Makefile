@@ -17,20 +17,20 @@ PACKAGE_REVISION_CL=`head -n 1 $(DIR)/debian/changelog | sed 's/^\(.*\) (\([^)]*
 .PHONY: debuild pbuilder-debuild pbuilder-build pbuilder-test check clean distclean
 .DEFAULT: pbuilder-debuild
 check:
-	if [ "$(PACKAGE)" != "$(PACKAGE_CL)" ]; \
-	then echo "Package name mismatch: Makefile: $(PACKAGE), changelog: $(PACKAGE_REVISION_CL)" \
+	@if [ "$(PACKAGE)" != "$(PACKAGE_CL)" ]; \
+	then echo "Package name mismatch: Makefile: $(PACKAGE), changelog: $(PACKAGE_REVISION_CL)"; \
 	fi
-	if [ "$(SOFTWARE_VERSION)" != "$(SOFTWARE_VERSION_CL)" ]; \
-	then echo "Software version mismatch: Makefile: $(SOFTWARE_VERSION), changelog: $(SOFTWARE_VERSION_CL)" \
+	@if [ "$(SOFTWARE_VERSION)" != "$(SOFTWARE_VERSION_CL)" ]; \
+	then echo "Software version mismatch: Makefile: $(SOFTWARE_VERSION), changelog: $(SOFTWARE_VERSION_CL)"; \
 	fi
-	if [ "$(PACKAGE_REVISION)" != "$(PACKAGE_REVISION_CL)" ]; \
-	then echo "Package revision mismatch: Makefile: $(PACKAGE_REVISION), changelog: $(PACKAGE_REVISION_CL)" \
+	@if [ "$(PACKAGE_REVISION)" != "$(PACKAGE_REVISION_CL)" ]; \
+	then echo "Package revision mismatch: Makefile: $(PACKAGE_REVISION), changelog: $(PACKAGE_REVISION_CL)"; \
 	fi
 /var/cache/pbuilder/base.tgz:
 	sudo pbuilder create --distribution etch
 pbuilder-build: /var/cache/pbuilder/base.tgz
-	if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'make debuild to generate .dsc.'; fi
-	if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'make debuild to generate .tar.gz.'; fi
+	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'make debuild to generate .dsc.'; fi
+	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'make debuild to generate .tar.gz.'; fi
 	(cd $(DIR) \
 	&& BINDMOUNTS="/var/cache/pbuilder/result" \
 	time sudo pbuilder build ../$(DEBFILE_BASENAME).dsc --hookdir ../pbuilder-hooks-build \
