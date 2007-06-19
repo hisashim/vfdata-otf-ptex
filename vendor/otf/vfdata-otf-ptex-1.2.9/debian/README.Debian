@@ -1,8 +1,10 @@
 vfdata-otf-ptex for Debian
 --------------------------
 
-This package contains virtual font files and macros to use OpenType
-fonts in pTeX.
+This is a Debianized version of OTF, a set of virtual font files and
+macros to use OpenType fonts in pTeX.  OTF is developed by Shuzaburo
+SAITO.  This Debian package is built using binary distribution by Akira
+KAKUTO.
 
  -- Hisashi MORITA <hisashim@users.sourceforge.net>  Mon, 30 Apr 2007 02:46:16 +0900
 

@@ -1,0 +1,19 @@
+% Non-embedding font map, which works without actual font data.
+% Warning: This file is not for serious use but only for testing!
+% Source: http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?OTF
+rml          H                Ryumin-Light
+rmlv         V                Ryumin-Light
+gbm          H                GothicBBB-Medium
+gbmv         V                GothicBBB-Medium
+hminr-h      H                Ryumin-Light
+hminr-v      V                Ryumin-Light
+otf-ujmr-h   UniJIS-UTF16-H   Ryumin-Light
+otf-ujmr-v   UniJIS-UTF16-V   Ryumin-Light
+otf-cjmr-h   Adobe-Japan1-6   Ryumin-Light
+otf-cjmr-v   Identity-V       Ryumin-Light
+hgothr-h     H                GothicBBB-Medium
+hgothr-v     V                GothicBBB-Medium
+otf-ujgr-h   UniJIS-UTF16-H   GothicBBB-Medium
+otf-ujgr-v   UniJIS-UTF16-V   GothicBBB-Medium
+otf-cjgr-h   Adobe-Japan1-6   GothicBBB-Medium
+otf-cjgr-v   Identity-V       GothicBBB-Medium
