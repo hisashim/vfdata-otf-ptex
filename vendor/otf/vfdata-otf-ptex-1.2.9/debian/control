@@ -1,5 +1,5 @@
 Source: vfdata-otf-ptex
-Section: tex
+Section: contrib/tex
 Priority: extra
 Maintainer: Hisashi MORITA <hisashim@users.sourceforge.net>
 Build-Depends: debhelper (>= 5), bzip2

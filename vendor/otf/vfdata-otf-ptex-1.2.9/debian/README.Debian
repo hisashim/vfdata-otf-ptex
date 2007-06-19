@@ -22,6 +22,8 @@ sure to include non-free in your apt lines.
   -deb http://example.org/pub/linux/debian/debian etch main
   +deb http://example.org/pub/linux/debian/debian etch main contrib non-free
   $ sudo apt-get update && sudo apt-get upgrade
+  $ sudo dpkg -i vfdata-otf-ptex*.deb
+  $ sudo apt-get install -f --yes
 
 Configuration
 -------------
@@ -62,9 +64,10 @@ functionality of the package in the following manner.
 
 Prepare non-embedding font map just for testing.
 
-  $ sudo $EDITOR /etc/texmf/dvipdfm/my-pseudo-otf.map
-  $ cat /etc/texmf/dvipdfm/my-pseudo-otf.map
+  $ cp /usr/share/doc/vfdata-otf-ptex/example/my-pseudo-otf.map ./
+  $ cat my-pseudo-otf.map
   % Non-embedding font map, which works without actual font data.
+  % Warning: This file is not for serious use but only for testing!
   % Source: http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?OTF
   rml          H                Ryumin-Light
   rmlv         V                Ryumin-Light
@@ -83,13 +86,9 @@ Prepare non-embedding font map just for testing.
   otf-cjgr-h   Adobe-Japan1-6   GothicBBB-Medium
   otf-cjgr-v   Identity-V       GothicBBB-Medium
 
-Update TeX resource database.
-
-  $ sudo mktexlsr
-
 Prepare some LaTeX document.
 
-  $ $EDITOR myotftest.tex
+  $ cp /usr/share/doc/vfdata-otf-ptex/example/myotftest.tex ./
   $ cat myotftest.tex
   \documentclass{jbook}
   \usepackage{otf}
@@ -102,18 +101,27 @@ Prepare some LaTeX document.
 Compile the document and generate PDF.
 
   $ platex myotftest.tex
-  $ dvipdfmx -f my-pseudo-otf testotf.dvi
+  $ dvipdfmx -f my-pseudo-otf.map myotftest.dvi
   $ acroread myotftest.pdf &
 
 Check File > Document Property > Font in Acroread.  Since Ryumin is
 specified but not embedded, Kozuka built into Acroread will be used for
 display (unless you have Ryumin installed on your computer).
 
+If you put the map in appropriate directory, it will become usable
+sitewide.
+
+  $ sudo cp my-pseudo-otf.map /etc/texmf/dvipdfm/
+  $ sudo mktexlsr
+  $ platex myotftest.tex
+  $ dvipdfmx -f my-pseudo-otf myotftest.dvi
+  $ acroread myotftest.pdf &
+
 Cleanup.
 
   $ sudo rm /etc/texmf/dvipdfm/my-pseudo-otf.map
   $ sudo mktexlsr
-  $ rm myotftest.{tex,aux,log,dvi,pdf}
+  $ rm my-pseudo-otf.map myotftest.{tex,aux,log,dvi,pdf}
 
 Note that my-pseudo-otf.map is a bogus map just for testing. You should
 install physical font for production use.

@@ -5,3 +5,5 @@ share/texmf/doc/misc/otf/otftest.tex
 share/texmf/doc/misc/otf/pkanatest.tex
 share/texmf/doc/misc/otf/pkanatest2.tex
 share/texmf/doc/misc/otf/test.tex
+debian/my-pseudo-otf.map
+debian/myotftest.tex

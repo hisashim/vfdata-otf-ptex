@@ -1,6 +1,11 @@
 vfdata-otf-ptex (1.2.9-0+0hisashim3) unstable; urgency=low
 
   * Fix Makefile adding comments on requirements.
+  * Change section from tex to contrib/tex.
+  * Remove unnecessary example files (debian/*.ex, etc.).
+  * Add example files (my-pseudo-otf.map, myotftest.tex). Update document
+    and scripts accordingly (README.Debian, test.sh, examples).
+  * Thanks to kmuto for pointing out above issues.
 
  -- Hisashi MORITA <hisashim@users.sourceforge.net>  Fri, 18 May 2007 03:06:25 +0900
 
