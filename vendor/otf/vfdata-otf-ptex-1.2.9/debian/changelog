@@ -1,3 +1,9 @@
+vfdata-otf-ptex (1.2.9-0+0hisashim4) unstable; urgency=low
+
+  * Fix file permission: Use "cp" instead of "cp -a".
+
+ -- Hisashi MORITA <hisashim@pynchon>  Thu, 21 Jun 2007 23:08:04 +0900
+
 vfdata-otf-ptex (1.2.9-0+0hisashim3) unstable; urgency=low
 
   * Fix Makefile adding comments on requirements.

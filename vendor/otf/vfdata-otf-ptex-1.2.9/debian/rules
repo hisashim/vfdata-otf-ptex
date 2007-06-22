@@ -62,23 +62,23 @@ install: build
 
 	# Add here commands to install the package into debian/vfdata-otf-ptex.
 	#$(MAKE) DESTDIR=$(CURDIR)/debian/vfdata-otf-ptex install
-	cp -a share/texmf/fonts/tfm/ptex/otf $(FNTDIR)/tfm/ptex/otf
-	cp -a share/texmf/fonts/vf/ptex/otf $(FNTDIR)/vf/ptex/otf
-	cp -a share/texmf/fonts/ofm/public/otf $(FNTDIR)/ofm/public/otf
-	cp -a share/texmf/doc/misc/otf/*.map $(MAPDIR)
-	cp -a share/texmf/ptex/platex/misc/otf/ajmacros.sty $(STYDIR)/otf
-	cp -a share/texmf/ptex/platex/misc/otf/mlcid.sty $(STYDIR)/otf
-	cp -a share/texmf/ptex/platex/misc/otf/mlutf.sty $(STYDIR)/otf
-	cp -a share/texmf/ptex/platex/misc/otf/otf.sty $(STYDIR)/otf
-	cp -a share/texmf/ptex/platex/misc/otf/redeffont.sty $(STYDIR)/otf
+	cp -r share/texmf/fonts/tfm/ptex/otf $(FNTDIR)/tfm/ptex/otf
+	cp -r share/texmf/fonts/vf/ptex/otf $(FNTDIR)/vf/ptex/otf
+	cp -r share/texmf/fonts/ofm/public/otf $(FNTDIR)/ofm/public/otf
+	cp -r share/texmf/doc/misc/otf/*.map $(MAPDIR)
+	cp -r share/texmf/ptex/platex/misc/otf/ajmacros.sty $(STYDIR)/otf
+	cp -r share/texmf/ptex/platex/misc/otf/mlcid.sty $(STYDIR)/otf
+	cp -r share/texmf/ptex/platex/misc/otf/mlutf.sty $(STYDIR)/otf
+	cp -r share/texmf/ptex/platex/misc/otf/otf.sty $(STYDIR)/otf
+	cp -r share/texmf/ptex/platex/misc/otf/redeffont.sty $(STYDIR)/otf
 	# hiraprop
-	cp -a share/texmf/fonts/tfm/ptex/hiraprop $(FNTDIR)/tfm/ptex/hiraprop
-	cp -a share/texmf/fonts/vf/ptex/hiraprop $(FNTDIR)/vf/ptex/hiraprop
-	cp -a share/texmf/ptex/platex/misc/hiraprop/hiraprop.sty $(STYDIR)/hiraprop
-	cp -a share/texmf/ptex/platex/misc/hiraprop/*.fd $(STYDIR)/hiraprop
+	cp -r share/texmf/fonts/tfm/ptex/hiraprop $(FNTDIR)/tfm/ptex/hiraprop
+	cp -r share/texmf/fonts/vf/ptex/hiraprop $(FNTDIR)/vf/ptex/hiraprop
+	cp -r share/texmf/ptex/platex/misc/hiraprop/hiraprop.sty $(STYDIR)/hiraprop
+	cp -r share/texmf/ptex/platex/misc/hiraprop/*.fd $(STYDIR)/hiraprop
 	# install hiraprop docs
-	cp -a share/texmf/doc/misc/hiraprop/*.txt $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/$(PACKAGE)/hiraprop
-	cp -a share/texmf/doc/misc/hiraprop/*.tex $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/$(PACKAGE)/hiraprop
+	cp -r share/texmf/doc/misc/hiraprop/*.txt $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/$(PACKAGE)/hiraprop
+	cp -r share/texmf/doc/misc/hiraprop/*.tex $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/$(PACKAGE)/hiraprop
 
 # Build architecture-independent files here.
 binary-indep: build install

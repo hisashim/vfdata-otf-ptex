@@ -2,7 +2,7 @@ TODO
 ====
 
 - More testing.
-- Comform to Debian policy.
+- Conform to Debian policy.
 - Contact upstream authors when ready.
 - Automate configuration using debconf.
 - Debianize hiraprop as a separate package.
