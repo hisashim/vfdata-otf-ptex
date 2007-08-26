@@ -1,8 +1,8 @@
 # Vendor drops (Third party software incorporated)
 
 WGET=/usr/bin/wget
-.PHONY: all xsltunit xsltml otf
-download-all: xsltunit xsltml otf
+.PHONY: all xsltunit xsltml otf libxsl-ruby
+download-all: xsltunit xsltml otf libxsl-ruby
 
 # XSLTUnit by Eric van der Vlist
 # http://xsltunit.org/
@@ -22,3 +22,8 @@ otf:
 	$(WGET) --directory-prefix=$@ ftp://akagi.ms.u-tokyo.ac.jp/pub/TeX/win32/otf.tar.bz2
 	$(WGET) --directory-prefix=$@ http://psitau.at.infoseek.co.jp/otfstable.zip
 	$(WGET) --directory-prefix=$@ http://psitau.at.infoseek.co.jp/PDF/otfmanual.pdf
+
+# libxsl-ruby by Sean Chittenden and contributors
+# http://rubyforge.org/projects/libxsl/
+libxsl-ruby:
+	$(WGET) --directory-prefix=$@ http://rubyforge.org/frs/download.php/9358/libxsl-ruby-0.3.6.tar.gz
