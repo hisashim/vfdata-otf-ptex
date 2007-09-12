@@ -1,8 +1,8 @@
 # Vendor drops (Third party software incorporated)
 
 WGET=/usr/bin/wget
-.PHONY: all xsltunit xsltml otf libxsl-ruby art
-download-all: xsltunit xsltml otf libxsl-ruby art
+.PHONY: all xsltunit xsltml otf libxsl-ruby art book-r5rs book-strunk-style
+all: xsltunit xsltml otf libxsl-ruby art book-r5rs book-strunk-style
 
 # XSLTUnit by Eric van der Vlist
 # http://xsltunit.org/
@@ -34,3 +34,9 @@ art:
 	$(WGET) --directory-prefix=$@ http://upload.wikimedia.org/wikipedia/commons/3/36/Open_bible_01_01.svg
 	$(WGET) --directory-prefix=$@ http://openclipart.org/people/molumen/molumen_Old_book.svg
 	$(WGET) --directory-prefix=$@ http://upload.wikimedia.org/wikipedia/commons/4/47/Tritonia_Lusitania_1935.jpg
+# R5RS Japanese translation by Hisao Suzuki
+book-r5rs:
+	$(WGET) --directory-prefix=$@ http://www.unixuser.org/~euske/doc/r5rs-ja/r5rs-ja.tar.gz
+# William Strunk, "The Elements of Style" Japanese translation
+book-strunk-style:
+	$(WGET) --directory-prefix=$@ http://www.kt.rim.or.jp/~hisashim/elementsofstyle/elementsofstyle.html
