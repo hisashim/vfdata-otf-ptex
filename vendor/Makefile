@@ -35,8 +35,8 @@ art:
 	$(WGET) --directory-prefix=$@ http://openclipart.org/people/molumen/molumen_Old_book.svg
 	$(WGET) --directory-prefix=$@ http://upload.wikimedia.org/wikipedia/commons/4/47/Tritonia_Lusitania_1935.jpg
 # R5RS Japanese translation by Hisao Suzuki
-book-r5rs:
+book-r5rs-ja:
 	$(WGET) --directory-prefix=$@ http://www.unixuser.org/~euske/doc/r5rs-ja/r5rs-ja.tar.gz
 # William Strunk, "The Elements of Style" Japanese translation
-book-strunk-style:
+book-strunk-style-ja:
 	$(WGET) --directory-prefix=$@ http://www.kt.rim.or.jp/~hisashim/elementsofstyle/elementsofstyle.html
