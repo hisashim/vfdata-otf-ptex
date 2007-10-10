@@ -1,8 +1,8 @@
 # Vendor drops (Third party software incorporated)
 
 WGET=/usr/bin/wget
-.PHONY: all xsltunit xsltml otf libxsl-ruby art book-r5rs book-strunk-style
-all: xsltunit xsltml otf libxsl-ruby art book-r5rs book-strunk-style
+.PHONY: all xsltunit xsltml otf libxsl-ruby art book-r5rs book-strunk-style book-carroll-alice-ja
+all: xsltunit xsltml otf libxsl-ruby art book-r5rs book-strunk-style book-carroll-alice-ja
 
 # XSLTUnit by Eric van der Vlist
 # http://xsltunit.org/
@@ -40,3 +40,8 @@ book-r5rs-ja:
 # William Strunk, "The Elements of Style" Japanese translation
 book-strunk-style-ja:
 	$(WGET) --directory-prefix=$@ http://www.kt.rim.or.jp/~hisashim/elementsofstyle/elementsofstyle.html
+
+# Alice's Adventures in Wonderland (Japanese translation by Hiroo YAMAGATA)
+book-carroll-alice-ja:
+	$(WGET) --directory-prefix=$@ --page-requisites --no-clobber --no-directories http://www.genpaku.org/alice01/alice01j.html
+	$(WGET) --directory-prefix=$@ --accept=tif --reject=html --mirror --no-parent --no-directories http://homepage.mac.com/sciapod/sc/free_downloads/alice/
