@@ -7,3 +7,10 @@ usr/share/texmf/fonts/vf/ptex/hiraprop
 usr/share/texmf/fonts/tfm/ptex/hiraprop
 usr/share/texmf/ptex/platex/misc/hiraprop
 usr/share/doc/vfdata-otf-ptex/hiraprop
+usr/share/texmf-texlive/fonts/vf/ptex/otf
+usr/share/texmf-texlive/fonts/tfm/ptex/otf
+usr/share/texmf-texlive/fonts/ofm/public/otf
+usr/share/texmf-texlive/ptex/platex/misc/otf
+usr/share/texmf-texlive/fonts/vf/ptex/hiraprop
+usr/share/texmf-texlive/fonts/tfm/ptex/hiraprop
+usr/share/texmf-texlive/ptex/platex/misc/hiraprop

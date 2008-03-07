@@ -11,9 +11,12 @@
 
 PACKAGE=vfdata-otf-ptex
 TXMF=/usr/share/texmf
+TXMF_TL=/usr/share/texmf-texlive
 FNTDIR=$(CURDIR)/debian/$(PACKAGE)$(TXMF)/fonts
 MAPDIR=$(CURDIR)/debian/$(PACKAGE)/etc/texmf/dvipdfm
 STYDIR=$(CURDIR)/debian/$(PACKAGE)$(TXMF)/ptex/platex/misc
+FNTDIR_TL=$(CURDIR)/debian/$(PACKAGE)$(TXMF_TL)/fonts
+STYDIR_TL=$(CURDIR)/debian/$(PACKAGE)$(TXMF_TL)/ptex/platex/misc
 
 CFLAGS = -Wall -g
 
@@ -66,16 +69,20 @@ install: build
 	cp -r share/texmf/fonts/vf/ptex/otf $(FNTDIR)/vf/ptex/otf
 	cp -r share/texmf/fonts/ofm/public/otf $(FNTDIR)/ofm/public/otf
 	cp -r share/texmf/doc/misc/otf/*.map $(MAPDIR)
-	cp -r share/texmf/ptex/platex/misc/otf/ajmacros.sty $(STYDIR)/otf
-	cp -r share/texmf/ptex/platex/misc/otf/mlcid.sty $(STYDIR)/otf
-	cp -r share/texmf/ptex/platex/misc/otf/mlutf.sty $(STYDIR)/otf
-	cp -r share/texmf/ptex/platex/misc/otf/otf.sty $(STYDIR)/otf
-	cp -r share/texmf/ptex/platex/misc/otf/redeffont.sty $(STYDIR)/otf
+	cp -r share/texmf/ptex/platex/misc/otf/*.sty $(STYDIR)/otf
+	cp -r share/texmf/fonts/tfm/ptex/otf $(FNTDIR_TL)/tfm/ptex/otf
+	cp -r share/texmf/fonts/vf/ptex/otf $(FNTDIR_TL)/vf/ptex/otf
+	cp -r share/texmf/fonts/ofm/public/otf $(FNTDIR_TL)/ofm/public/otf
+	cp -r share/texmf/ptex/platex/misc/otf/*.sty $(STYDIR_TL)/otf
 	# hiraprop
 	cp -r share/texmf/fonts/tfm/ptex/hiraprop $(FNTDIR)/tfm/ptex/hiraprop
 	cp -r share/texmf/fonts/vf/ptex/hiraprop $(FNTDIR)/vf/ptex/hiraprop
 	cp -r share/texmf/ptex/platex/misc/hiraprop/hiraprop.sty $(STYDIR)/hiraprop
 	cp -r share/texmf/ptex/platex/misc/hiraprop/*.fd $(STYDIR)/hiraprop
+	cp -r share/texmf/fonts/tfm/ptex/hiraprop $(FNTDIR_TL)/tfm/ptex/hiraprop
+	cp -r share/texmf/fonts/vf/ptex/hiraprop $(FNTDIR_TL)/vf/ptex/hiraprop
+	cp -r share/texmf/ptex/platex/misc/hiraprop/hiraprop.sty $(STYDIR_TL)/hiraprop
+	cp -r share/texmf/ptex/platex/misc/hiraprop/*.fd $(STYDIR_TL)/hiraprop
 	# install hiraprop docs
 	cp -r share/texmf/doc/misc/hiraprop/*.txt $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/$(PACKAGE)/hiraprop
 	cp -r share/texmf/doc/misc/hiraprop/*.tex $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/$(PACKAGE)/hiraprop
