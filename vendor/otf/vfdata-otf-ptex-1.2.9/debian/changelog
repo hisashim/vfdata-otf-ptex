@@ -1,3 +1,10 @@
+vfdata-otf-ptex (1.2.9-0+0hisashim5) unstable; urgency=low
+
+  * Change package dependency: Change gs-esp to ghostscript.
+  * Add support for TeX Live.
+
+ -- Hisashi MORITA <hisashim@users.sourceforge.net>  Fri, 07 Mar 2008 21:42:40 +0900
+
 vfdata-otf-ptex (1.2.9-0+0hisashim4) unstable; urgency=low
 
   * Fix file permission: Use "cp" instead of "cp -a".
