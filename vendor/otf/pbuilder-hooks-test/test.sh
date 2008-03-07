@@ -7,10 +7,10 @@ if [ -n "$1" ]
 fi
 
 echo "### Editing apt lines..."
-cp /etc/apt/sources.list{,.bak}
-echo 'deb http://ftp.jp.debian.org/debian etch main contrib non-free' >> /etc/apt/sources.list
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+echo 'deb http://cdn.debian.net/debian etch main contrib non-free' >> /etc/apt/sources.list
 echo "### /etc/apt/sources.list"
-diff -u /etc/apt/sources.list{.bak,}
+diff -u /etc/apt/sources.list.bak /etc/apt/sources.list
 apt-get update
 apt-get update
 
@@ -23,10 +23,10 @@ dpkg -l | grep '^ii'
 echo "### Setting up CMAPs and font maps..."
 if [ -f /etc/texmf/texmf.d/50dvipdfmx.cnf ]
 then
-  cp /etc/texmf/texmf.d/50dvipdfmx.cnf{,.bak}
+  cp /etc/texmf/texmf.d/50dvipdfmx.cnf /etc/texmf/texmf.d/50dvipdfmx.cnf.bak
   echo 'CMAPINPUTS = .;/usr/share/fonts/cmap//' >> /etc/texmf/texmf.d/50dvipdfmx.cnf
   echo "### /etc/texmf/texmf.d/50dvipdfmx.cnf"
-  diff -u /etc/texmf/texmf.d/50dvipdfmx.cnf{.bak,}
+  diff -u /etc/texmf/texmf.d/50dvipdfmx.cnf.bak /etc/texmf/texmf.d/50dvipdfmx.cnf
 elif [ -f /etc/texmf/texmf.d/80DVIPDFMx.cnf ]
 then
   echo "### /etc/texmf/texmf.d/80DVIPDFMx.cnf"
@@ -48,7 +48,12 @@ echo "### Copying myotftest.pdf to /var/cache/pbuilder/result..."
 cp myotftest.pdf /var/cache/pbuilder/result
 
 echo "### Cleaning up..."
-rm my-pseudo-otf.map myotftest.{tex,aux,log,dvi,pdf}
+rm my-pseudo-otf.map
+rm myotftest.tex
+rm myotftest.aux
+rm myotftest.log
+rm myotftest.dvi
+rm myotftest.pdf
 
 echo "### Testing uninstallation..."
 dpkg --remove vfdata-otf-ptex
