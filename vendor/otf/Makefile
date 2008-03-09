@@ -26,32 +26,29 @@ check:
 	@if [ "$(PACKAGE_REVISION)" != "$(PACKAGE_REVISION_CL)" ]; \
 	then echo "Package revision mismatch: Makefile: $(PACKAGE_REVISION), changelog: $(PACKAGE_REVISION_CL)"; \
 	fi
-/var/cache/pbuilder/base.tgz:
-	sudo pbuilder create --distribution etch
-pbuilder-build: /var/cache/pbuilder/base.tgz
-	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'Error: Type "make debuild" to generate .dsc.'; fi
-	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'Error: Type "make debuild" to generate .tar.gz.'; fi
-	(cd $(DIR) \
-	&& BINDMOUNTS="/var/cache/pbuilder/result" \
-	time sudo pbuilder build ../$(DEBFILE_BASENAME).dsc --hookdir ../pbuilder-hooks-build \
-	| tee ../$@.log; \
-	cd -)
-pbuilder-test: /var/cache/pbuilder/base.tgz
-	(cd $(DIR) \
-	&& time sudo pbuilder \
-	  execute --hookdir ../pbuilder-hooks-test --bindmounts "/var/cache/pbuilder/result" \
-	  -- ../pbuilder-hooks-test/test.sh $(DEBFILE_BASENAME) \
-	| tee ../$@.log; \
-	cd -)
-pbuilder-login:
-	(cd $(DIR) \
-	&& time sudo pbuilder login --bindmounts "/var/cache/pbuilder/result" \
-	| tee ../$@.log; \
-	cd -)
 debuild:
-	(cd $(DIR) && time debuild -us -uc -i.svn | tee ../debuild.log; cd -)
+	(cd $(DIR) && time debuild $(DEBBUILDOPTS) -i.svn 2>&1 | tee ../$@.log; cd -)
 clean:
 	-rm -f debuild.log pbuilder-build.log pbuilder-test.log
 	(cd $(DIR) && sudo debuild clean; cd -)
 distclean: clean
 	-rm *.dsc *.diff.gz  *.build *.changes *.deb
+pbuilder-create:
+	sudo pbuilder create --distribution etch --mirror http://cdn.debian.net/debian --override-config
+pbuilder-update:
+	sudo pbuilder update --distribution etch --mirror http://cdn.debian.net/debian --override-config
+pbuilder-build: $(DEBFILE_BASENAME).dsc $(DEBFILE_BASENAME).tar.gz
+	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'Error: Type "make debuild" to generate .dsc.'; fi
+	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'Error: Type "make debuild" to generate .tar.gz.'; fi
+	(cd $(DIR) \
+	&& sudo pbuilder build --hookdir ../pbuilder-hooks-build --bindmounts "/var/cache/pbuilder/result" ../$< 2>&1 | tee ../$@.log; \
+	cd -)
+pbuilder-test: $(DEBFILE_BASENAME)_all.deb
+	(cd $(DIR) \
+	&& sudo pbuilder execute --hookdir ../pbuilder-hooks-test --bindmounts "/var/cache/pbuilder/result"  -- \
+	../pbuilder-hooks-test/test.sh $(DEBFILE_BASENAME) 2>&1 | tee ../$@.log; \
+	cd -)
+pbuilder-login:
+	(cd $(DIR) \
+	&& time sudo pbuilder login --bindmounts "/var/cache/pbuilder/result" 2>&1 | tee ../$@.log; \
+	cd -)
