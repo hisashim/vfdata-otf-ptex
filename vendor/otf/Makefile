@@ -24,7 +24,7 @@ DISTNAME=unstable
 all: cowbuilder-build
 check:
 	@if [ "$(PACKAGE)" != "$(PACKAGE_CL)" ]; \
-	then echo "Package name mismatch: Makefile: $(PACKAGE), changelog: $(PACKAGE_REVISION_CL)"; \
+	then echo "Package name mismatch: Makefile: $(PACKAGE), changelog: $(PACKAGE_CL)"; \
 	fi
 	@if [ "$(SOFTWARE_VERSION)" != "$(SOFTWARE_VERSION_CL)" ]; \
 	then echo "Software version mismatch: Makefile: $(SOFTWARE_VERSION), changelog: $(SOFTWARE_VERSION_CL)"; \
