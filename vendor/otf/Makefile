@@ -43,12 +43,12 @@ pbuilder-build: $(DEBFILE_BASENAME).dsc $(DEBFILE_BASENAME).tar.gz
 	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'Error: Type "make debuild" to generate .dsc.'; fi
 	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'Error: Type "make debuild" to generate .tar.gz.'; fi
 	(cd $(DIR) \
-	&& sudo pbuilder build --hookdir ../pbuilder-hooks-build --bindmounts "/var/cache/pbuilder/result" ../$< 2>&1 | tee ../$@.log; \
+	&& sudo pbuilder build --hookdir ../pbuilder-hooks --bindmounts "/var/cache/pbuilder/result" ../$< 2>&1 | tee ../$@.log; \
 	cd -)
 pbuilder-test: $(DEBFILE_BASENAME)_all.deb
 	(cd $(DIR) \
-	&& sudo pbuilder execute --hookdir ../pbuilder-hooks-build --bindmounts "/var/cache/pbuilder/result"  -- \
-	../pbuilder-hooks-build/test.sh $(DEBFILE_BASENAME) 2>&1 | tee ../$@.log; \
+	&& sudo pbuilder execute --hookdir ../pbuilder-hooks --bindmounts "/var/cache/pbuilder/result"  -- \
+	../pbuilder-hooks/test.sh $(DEBFILE_BASENAME) 2>&1 | tee ../$@.log; \
 	cd -)
 pbuilder-login:
 	(cd $(DIR) \
@@ -65,12 +65,12 @@ cowbuilder-create:
 cowbuilder-update:
 	sudo cowbuilder --update --distribution $(DISTNAME) --mirror http://cdn.debian.net/debian --override-config
 cowbuilder-build: $(DEBFILE_BASENAME).dsc
-	sudo cowbuilder --build --hookdir pbuilder-hooks-build --bindmounts "/var/cache/pbuilder/result" $< 2>&1 | tee $@.log ;
+	sudo cowbuilder --build --hookdir pbuilder-hooks --bindmounts "/var/cache/pbuilder/result" $< 2>&1 | tee $@.log ;
 cowbuilder-login:
-	sudo cowbuilder --login --hookdir pbuilder-hooks-build --bindmounts "/var/cache/pbuilder/result" 2>&1 | tee $@.log ;
+	sudo cowbuilder --login --hookdir pbuilder-hooks --bindmounts "/var/cache/pbuilder/result" 2>&1 | tee $@.log ;
 cowbuilder-test: $(DEBFILE_BASENAME)_all.deb
-	sudo cowbuilder --execute --hookdir pbuilder-hooks-build --bindmounts "/var/cache/pbuilder/result" -- \
-	                pbuilder-hooks-build/test.sh $(DEBFILE_BASENAME) 2>&1 | tee $@.log ;
+	sudo cowbuilder --execute --hookdir pbuilder-hooks --bindmounts "/var/cache/pbuilder/result" -- \
+	                pbuilder-hooks/test.sh $(DEBFILE_BASENAME) 2>&1 | tee $@.log ;
 cowbuilder-testclean: pbuilder-testclean
 cowbuilder-clean: pbuilder-clean
 	-rm -f cowbuilder-build.log cowbuilder-login.log cowbuilder-test.log
