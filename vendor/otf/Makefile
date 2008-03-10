@@ -47,8 +47,8 @@ pbuilder-build: $(DEBFILE_BASENAME).dsc $(DEBFILE_BASENAME).tar.gz
 	cd -)
 pbuilder-test: $(DEBFILE_BASENAME)_all.deb
 	(cd $(DIR) \
-	&& sudo pbuilder execute --hookdir ../pbuilder-hooks-test --bindmounts "/var/cache/pbuilder/result"  -- \
-	../pbuilder-hooks-test/test.sh $(DEBFILE_BASENAME) 2>&1 | tee ../$@.log; \
+	&& sudo pbuilder execute --hookdir ../pbuilder-hooks-build --bindmounts "/var/cache/pbuilder/result"  -- \
+	../pbuilder-hooks-build/test.sh $(DEBFILE_BASENAME) 2>&1 | tee ../$@.log; \
 	cd -)
 pbuilder-login:
 	(cd $(DIR) \
@@ -57,7 +57,8 @@ pbuilder-login:
 pbuilder-testclean:
 	sudo rm -f /var/cache/pbuilder/result/myotftest.*
 pbuilder-clean:
-	-rm -f pbuilder-build.log pbuilder-login.log pbuilder-test.logpbuilder-distclean: pbuilder-clean
+	-rm -f pbuilder-build.log pbuilder-login.log pbuilder-test.log
+pbuilder-distclean: pbuilder-clean
 	sudo rm -f /var/cache/pbuilder/result/$(DEBFILE_BASENAME)_*
 cowbuilder-create:
 	sudo cowbuilder --create --distribution $(DISTNAME) --mirror http://cdn.debian.net/debian --override-config
@@ -66,10 +67,10 @@ cowbuilder-update:
 cowbuilder-build: $(DEBFILE_BASENAME).dsc
 	sudo cowbuilder --build --hookdir pbuilder-hooks-build --bindmounts "/var/cache/pbuilder/result" $< 2>&1 | tee $@.log ;
 cowbuilder-login:
-	sudo cowbuilder --login --hookdir pbuilder-hooks-test --bindmounts "/var/cache/pbuilder/result" 2>&1 | tee $@.log ;
+	sudo cowbuilder --login --hookdir pbuilder-hooks-build --bindmounts "/var/cache/pbuilder/result" 2>&1 | tee $@.log ;
 cowbuilder-test: $(DEBFILE_BASENAME)_all.deb
-	sudo cowbuilder --execute --hookdir pbuilder-hooks-test --bindmounts "/var/cache/pbuilder/result" -- \
-	                pbuilder-hooks-test/test.sh $(DEBFILE_BASENAME) 2>&1 | tee $@.log ;
+	sudo cowbuilder --execute --hookdir pbuilder-hooks-build --bindmounts "/var/cache/pbuilder/result" -- \
+	                pbuilder-hooks-build/test.sh $(DEBFILE_BASENAME) 2>&1 | tee $@.log ;
 cowbuilder-testclean: pbuilder-testclean
 cowbuilder-clean: pbuilder-clean
 	-rm -f cowbuilder-build.log cowbuilder-login.log cowbuilder-test.log
