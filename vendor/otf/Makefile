@@ -6,7 +6,7 @@
 #        make pbuilder-test && acroread /var/cache/pbuilder/result/myotftest.pdf
 PACKAGE=vfdata-otf-ptex
 SOFTWARE_VERSION=1.2.9
-PACKAGE_REVISION=0+0hisashim5
+PACKAGE_REVISION=0+0hisashim6
 DIR=$(PACKAGE)-$(SOFTWARE_VERSION)
 DEBFILE_BASENAME=$(PACKAGE)_$(SOFTWARE_VERSION)-$(PACKAGE_REVISION)
 

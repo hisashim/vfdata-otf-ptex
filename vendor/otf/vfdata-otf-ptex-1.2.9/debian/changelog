@@ -1,3 +1,10 @@
+vfdata-otf-ptex (1.2.9-0+0hisashim6) unstable; urgency=low
+
+  * Change target distribution from etch to unstable (may still work
+    on stable though). 
+
+ -- Hisashi MORITA <hisashim@users.sourceforge.net>  Tue, 11 Mar 2008 5:43:45 +0900
+
 vfdata-otf-ptex (1.2.9-0+0hisashim5) unstable; urgency=low
 
   * Change package dependency: Change gs-esp to ghostscript.
