@@ -16,8 +16,12 @@ PACKAGE_REVISION_CL=`head -n 1 $(DIR)/debian/changelog | sed 's/^\(.*\) (\([^)]*
 
 DISTNAME=unstable
 
-.PHONY: debuild pbuilder-debuild pbuilder-build pbuilder-test check clean distclean
-.DEFAULT: pbuilder-debuild
+.PHONY: debuild-build debuild-clean debuild-distclean \
+	pbuilder-build pbuilder-test pbuilder-login pbuilder-clean pbuilder-testclean pbuilder-distclean \
+	cowbuilder-build cowbuilder-test cowbuilder-login cowbuilder-clean cowbuilder-testclean cowbuilder-distclean \
+	check all
+.DEFAULT: all
+all: cowbuilder-build
 check:
 	@if [ "$(PACKAGE)" != "$(PACKAGE_CL)" ]; \
 	then echo "Package name mismatch: Makefile: $(PACKAGE), changelog: $(PACKAGE_REVISION_CL)"; \
@@ -28,20 +32,29 @@ check:
 	@if [ "$(PACKAGE_REVISION)" != "$(PACKAGE_REVISION_CL)" ]; \
 	then echo "Package revision mismatch: Makefile: $(PACKAGE_REVISION), changelog: $(PACKAGE_REVISION_CL)"; \
 	fi
-debuild:
+debuild-build:
+	@echo 'Tip: If you are not ready for signing, type "make debuild-build DEBBUILDOPTS="-us -uc".'
+	@echo 'Tip: To pass env vars beyond debuild, type "make debuild-build DEBBUILDOPTS="--set-envvar=VAR=VAL -us -uc".'
 	(cd $(DIR) && debuild $(DEBBUILDOPTS) -i.svn 2>&1 | tee ../$@.log; cd -)
-clean: pbuilder-clean cowbuilder-clean
+debuild-clean:
 	-rm -f debuild.log
 	(cd $(DIR) && sudo debuild clean; cd -)
-distclean: clean
-	-rm *.dsc *.diff.gz  *.build *.changes *.deb
+debuild-distclean: debuild-clean
+	-rm -f $(DEBFILE_BASENAME).dsc
+	-rm -f $(DEBFILE_BASENAME).diff.gz
+	-rm -f $(DEBFILE_BASENAME).build
+	-rm -f $(DEBFILE_BASENAME).changes
+	-rm -f $(DEBFILE_BASENAME).deb
+	-rm -f $(DEBFILE_BASENAME).tar.gz
+$(DEBFILE_BASENAME).dsc: debuild-build
+$(DEBFILE_BASENAME).tar.gz: debuild-build
 pbuilder-create:
 	sudo pbuilder create --distribution $(DISTNAME) --mirror http://cdn.debian.net/debian --override-config
 pbuilder-update:
 	sudo pbuilder update --distribution $(DISTNAME) --mirror http://cdn.debian.net/debian --override-config
 pbuilder-build: $(DEBFILE_BASENAME).dsc $(DEBFILE_BASENAME).tar.gz
-	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'Error: Type "make debuild" to generate .dsc.'; fi
-	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'Error: Type "make debuild" to generate .tar.gz.'; fi
+	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'Error: Type "make debuild-build" to generate .dsc.'; fi
+	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'Error: Type "make debuild-build" to generate .tar.gz.'; fi
 	(cd $(DIR) \
 	&& sudo pbuilder build --hookdir ../pbuilder-hooks --bindmounts "/var/cache/pbuilder/result" ../$< 2>&1 | tee ../$@.log; \
 	cd -)
@@ -64,7 +77,9 @@ cowbuilder-create:
 	sudo cowbuilder --create --distribution $(DISTNAME) --mirror http://cdn.debian.net/debian --override-config
 cowbuilder-update:
 	sudo cowbuilder --update --distribution $(DISTNAME) --mirror http://cdn.debian.net/debian --override-config
-cowbuilder-build: $(DEBFILE_BASENAME).dsc
+cowbuilder-build: $(DEBFILE_BASENAME).dsc $(DEBFILE_BASENAME).tar.gz
+	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'Error: Type "make debuild-build" to generate .dsc.'; fi
+	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'Error: Type "make debuild-build" to generate .tar.gz.'; fi
 	sudo cowbuilder --build --hookdir pbuilder-hooks --bindmounts "/var/cache/pbuilder/result" $< 2>&1 | tee $@.log ;
 cowbuilder-login:
 	sudo cowbuilder --login --hookdir pbuilder-hooks --bindmounts "/var/cache/pbuilder/result" 2>&1 | tee $@.log ;
