@@ -31,7 +31,7 @@ libxsl-ruby:
 # TeXML processor by Oleg Parashchenko
 # http://getfo.org/texml/
 texml:
-	$(WGET) --directory-prefix=$@ http://prdownloads.sourceforge.net/getfo/texml-2.0.0.tar.gz?download
+	$(WGET) --directory-prefix=$@ http://prdownloads.sourceforge.net/getfo/texml-2.0.1.tar.gz
 
 # open bible by Aaron Johnson
 # old book by Molumen
