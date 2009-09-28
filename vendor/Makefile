@@ -26,7 +26,7 @@ otf:
 # libxsl-ruby by Sean Chittenden and contributors
 # http://rubyforge.org/projects/libxsl/
 libxsl-ruby:
-	$(WGET) --directory-prefix=$@ http://rubyforge.org/frs/download.php/9358/libxsl-ruby-0.3.6.tar.gz
+	$(WGET) --directory-prefix=$@ http://rubyforge.org/frs/download.php/40144/libxslt-ruby-0.8.2.tgz
 
 # TeXML processor by Oleg Parashchenko
 # http://getfo.org/texml/
