@@ -5,9 +5,6 @@
 #        sudo pbuilder create --distribution etch
 #        make pbuilder-build && ls /var/cache/pbuilder/result/*.{dsc,tar.gz,diff.gz,build,changes,deb}
 #        make pbuilder-test && ls -al /var/cache/pbuilder/result/
-PACKAGE=dummy
-SOFTWARE_VERSION=A.B.C
-PACKAGE_REVISION=X+YjohndZ
 DIR=$(PACKAGE)-$(SOFTWARE_VERSION)
 DEBFILE_BASENAME=$(PACKAGE)_$(SOFTWARE_VERSION)-$(PACKAGE_REVISION)
 PACKAGE_CL=`head -n 1 $(DIR)/debian/changelog | sed 's/^\(.*\) (\([^)]*\)-\([^)]*\)).*/\1/g'`
@@ -51,10 +48,17 @@ debuild-distclean: debuild-clean
 	rm -f $(DEBFILE_BASENAME)*.deb
 
 pbuilder-build: $(DEBFILE_BASENAME).dsc $(PACKAGE)_$(SOFTWARE_VERSION).orig.tar.gz
-	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'Error: Type "make debuild-build" to generate .dsc.'; fi
-	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'Error: Type "make debuild-build" to generate .tar.gz.'; fi
+	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; \
+	  then echo 'Error: Type "make debuild-build" to generate .dsc.'; \
+	fi
+	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; \
+	  then echo 'Error: Type "make debuild-build" to generate .tar.gz.'; \
+	fi
 	(cd $(DIR) \
-	&& sudo pbuilder build --hookdir ../pbuilder-hooks --bindmounts "/var/cache/pbuilder/result" ../$< 2>&1 | tee ../$@.log; \
+	&& sudo pbuilder build \
+	                 --hookdir ../pbuilder-hooks \
+	                 --bindmounts "/var/cache/pbuilder/result" ../$< 2>&1 \
+	| tee ../$@.log; \
 	cd -)
 
 pbuilder-clean:
@@ -65,13 +69,33 @@ pbuilder-distclean: pbuilder-clean
 
 pbuilder-login:
 	(cd $(DIR) \
-	&& sudo pbuilder login --bindmounts "/var/cache/pbuilder/result" 2>&1 | tee ../$@.log; \
+	&& sudo pbuilder login --bindmounts "/var/cache/pbuilder/result" 2>&1 \
+	| tee ../$@.log; \
 	cd -)
 
+pbuilder-test: $(DEBFILE_BASENAME)_all.deb
+	(cd $(DIR) \
+	&& sudo pbuilder execute \
+	                 --hookdir ../pbuilder-hooks \
+	                 --bindmounts "/var/cache/pbuilder/result"  -- \
+	../pbuilder-hooks/test.sh $(DEBFILE_BASENAME) 2>&1 \
+	| tee ../$@.log; \
+	cd -)
+
+pbuilder-testclean:
+	sudo rm -f /var/cache/pbuilder/result/courier-extra-test.*
+
 cowbuilder-build: $(DEBFILE_BASENAME).dsc $(PACKAGE)_$(SOFTWARE_VERSION).orig.tar.gz
-	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; then echo 'Error: Type "make debuild-build" to generate .dsc.'; fi
-	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; then echo 'Error: Type "make debuild-build" to generate .tar.gz.'; fi
-	sudo cowbuilder --build --hookdir pbuilder-hooks --bindmounts "/var/cache/pbuilder/result" $< 2>&1 | tee $@.log ;
+	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; \
+	  then echo 'Error: Type "make debuild-build" to generate .dsc.'; \
+	fi
+	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; \
+	  then echo 'Error: Type "make debuild-build" to generate .tar.gz.'; \
+	fi
+	sudo cowbuilder --build \
+	                --hookdir pbuilder-hooks \
+	                --bindmounts "/var/cache/pbuilder/result" $< 2>&1 \
+	| tee $@.log ;
 
 cowbuilder-clean: pbuilder-clean
 	-rm -f cowbuilder-build.log cowbuilder-login.log cowbuilder-test.log
@@ -79,7 +103,19 @@ cowbuilder-clean: pbuilder-clean
 cowbuilder-distclean: pbuilder-distclean
 
 cowbuilder-login:
-	sudo cowbuilder --login --hookdir pbuilder-hooks --bindmounts "/var/cache/pbuilder/result" 2>&1 | tee $@.log ;
+	sudo cowbuilder --login \
+	                --hookdir pbuilder-hooks \
+	                --bindmounts "/var/cache/pbuilder/result" 2>&1 \
+	| tee $@.log ;
+
+cowbuilder-test: $(DEBFILE_BASENAME)_all.deb
+	sudo cowbuilder --execute \
+	                --hookdir pbuilder-hooks \
+	                --bindmounts "/var/cache/pbuilder/result" -- \
+	pbuilder-hooks/test.sh $(DEBFILE_BASENAME) 2>&1 \
+	| tee $@.log ;
+
+cowbuilder-testclean: pbuilder-testclean
 
 debclean: debuild-clean pbuilder-clean cowbuilder-clean
 

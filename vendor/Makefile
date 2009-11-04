@@ -1,8 +1,8 @@
 # Vendor drops (Third party software incorporated)
 
 WGET=/usr/bin/wget
-.PHONY: all xsltunit xsltml otf libxsl-ruby texml art book-r5rs book-strunk-style book-carroll-alice-ja
-all: xsltunit xsltml otf libxsl-ruby texml art book-r5rs book-strunk-style book-carroll-alice-ja
+.PHONY: all xsltunit xsltml otf libxsl-ruby texml art book-r5rs book-strunk-style book-carroll-alice-ja courier-extra
+all: xsltunit xsltml otf libxsl-ruby texml art book-r5rs book-strunk-style book-carroll-alice-ja courier-extra
 
 # XSLTUnit by Eric van der Vlist
 # http://xsltunit.org/
@@ -53,3 +53,7 @@ book-strunk-style-ja:
 book-carroll-alice-ja:
 	$(WGET) --directory-prefix=$@ --page-requisites --no-clobber --no-directories http://www.genpaku.org/alice01/alice01j.html
 	$(WGET) --directory-prefix=$@ --accept=tif --reject=html --mirror --no-parent --no-directories http://homepage.mac.com/sciapod/sc/free_downloads/alice/
+
+# Courier extra weights and variants
+courier-extra:
+	mkdir courier-extra

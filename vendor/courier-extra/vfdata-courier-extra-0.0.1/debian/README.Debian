@@ -1,0 +1,26 @@
+vfdata-courier-extra for Debian
+-------------------------------
+
+This is a Debianized version of courier-extra, a set of virtual font files
+to use Courier extra weights and variants in LaTeX.
+
+Installation
+------------
+
+Install the package, if you haven't yet.
+
+  $ sudo dpkg -i vfdata-courier-extra*.deb
+
+Configuration
+-------------
+
+  $ sudo mktexlsr
+
+Testing
+-------
+
+  $ cp /usr/share/doc/vfdata-courier-extra/examples/courier-extra-test.tex ./
+  $ latex courier-extra-test.tex
+  $ dvipdfmx -f courier-extra.map courier-extra-test.dvi
+  $ xpdf courier-extra-test.pdf &
+  $ rm courier-extra-test.{tex,aux,log,dvi,pdf}

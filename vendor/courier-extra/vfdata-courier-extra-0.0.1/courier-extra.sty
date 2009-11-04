@@ -1,0 +1,10 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{courier-extra}[2009/11/03]
+\RequirePackage[T1]{fontenc}
+\RequirePackage{textcomp}
+\RequirePackage{courier}
+{\usefont{T1}{pcr}{m}{n}}% load pcr
+\DeclareFontShape{T1}{pcr}{m}{n}{<-> pcrr8r}{}
+\DeclareFontShape{T1}{pcr}{b}{n}{<-> pcrb8r}{}
+\DeclareFontShape{T1}{pcr}{mc}{n}{<-> pcrr8tn}{}
+\DeclareFontShape{T1}{pcr}{bc}{n}{<-> pcrb8tn}{}
