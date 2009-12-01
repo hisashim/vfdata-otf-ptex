@@ -13,7 +13,7 @@ echo "### /etc/apt/sources.list"
 diff -u /etc/apt/sources.list.bak /etc/apt/sources.list
 apt-get update
 apt-get update
-echo "### Installing vfdata-otf-ptex and requirements..."
+echo "### Installing the package and requirements..."
 dpkg -i /var/cache/pbuilder/result/${DEBFILE_BASENAME}_all.deb
 apt-get install -f --yes
 echo "### dpkg -l | grep '^ii'"
@@ -41,7 +41,7 @@ cp -v /usr/share/doc/vfdata-courier-extra/examples/courier-extra-test.tex ./
 echo "### Processing LaTeX document..."
 latex courier-extra-test.tex
 dvipdfmx -f courier-extra.map courier-extra-test.dvi
-echo "### Copying myotftest.* to /var/cache/pbuilder/result..."
+echo "### Copying test result to /var/cache/pbuilder/result..."
 cp -v courier-extra-test.* /var/cache/pbuilder/result
 echo "### Cleaning up..."
 rm -v courier-extra-test.{tex,aux,log,dvi,pdf}
