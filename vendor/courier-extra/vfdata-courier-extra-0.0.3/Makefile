@@ -23,6 +23,7 @@ install:
 	cp -r *.tfm $(DESTDIR)$(TXMF_TL)/fonts/tfm/public/courier-extra
 	cp -r *.vf  $(DESTDIR)$(TXMF_TL)/fonts/vf/public/courier-extra
 	cp -r *.map $(DESTDIR)/etc/texmf/dvipdfm
+	cp -r *.fd  $(DESTDIR)$(TXMF_TL)/tex/latex/courier-extra
 	cp -r *.sty $(DESTDIR)$(TXMF_TL)/tex/latex/courier-extra
 	cd $(DESTDIR)$(TXMF) ; \
 	ln -s       $(TXMF_TL)/fonts/tfm/public/courier-extra \
