@@ -1,4 +1,12 @@
-pcrr8r 8r ucrr8a
-pcrr8rn 8r ucrr8a -e .85
-pcrb8r 8r ucrb8a
-pcrb8rn 8r ucrb8a -e .85
+pcrr8r   8r ucrr8a
+pcrrc8r  8r ucrr8a
+pcrro8r  8r ucrro8a
+pcrr8rn  8r ucrr8a -e .85
+pcrrc8rn 8r ucrr8a -e .85
+pcrro8rn 8r ucrro8a -e .85
+pcrb8r   8r ucrb8a
+pcrbc8r  8r ucrb8a
+pcrbo8r  8r ucrbo8a
+pcrb8rn  8r ucrb8a -e .85
+pcrbc8rn 8r ucrb8a -e .85
+pcrbo8rn 8r ucrbo8a -e .85

@@ -1,20 +1,31 @@
 \input fontinst.sty
 \needsfontinstversion{1.926}
 
-%% make courier condensed by 0.85
-\def\makecouriercondensed#1{%
-  \transformfont{pcr#18rn}{%
-    \xscalefont{850}{%
-      \reencodefont{8r}{\fromafm{pcr#18a}}}}}
+%% regular width
+\transformfont {pcrr8r}  {\reencodefont{8r}{\fromafm{pcrr8a}}}
+\transformfont {pcrro8r} {\reencodefont{8r}{\fromafm{pcrro8a}}}
+\transformfont {pcrb8r}  {\reencodefont{8r}{\fromafm{pcrb8a}}}
+\transformfont {pcrbo8r} {\reencodefont{8r}{\fromafm{pcrbo8a}}}
 
-\makecouriercondensed{r}  % regular
-\makecouriercondensed{b}  % bold
+%% narrow width (condensed by 0.85)
+\transformfont {pcrr8rn} {\xscalefont{850}{\reencodefont{8r}{\fromafm{pcrr8a}}}}
+\transformfont {pcrro8rn}{\xscalefont{850}{\reencodefont{8r}{\fromafm{pcrro8a}}}}
+\transformfont {pcrb8rn} {\xscalefont{850}{\reencodefont{8r}{\fromafm{pcrb8a}}}}
+\transformfont {pcrbo8rn}{\xscalefont{850}{\reencodefont{8r}{\fromafm{pcrbo8a}}}}
 
 \installfonts
-\installfont{pcrr7tn}{pcrr8rn,psyr,latin}{OT1tt}{OT1}{pcr}{c}{n}{}
-\installfont{pcrr8tn}{pcrr8rn,psyr,latin}{T1}{T1}{pcr}{c}{n}{}
-\installfont{pcrb7tn}{pcrb8rn,psyr,latin}{OT1tt}{OT1}{pcr}{b}{n}{}
-\installfont{pcrb8tn}{pcrb8rn,psyr,latin}{T1}{T1}{pcr}{b}{n}{}
+\installfont {pcrr8t}  {pcrr8r,newlatin}  {t1} {T1}{pcr}{c}{n}{}
+\installfont {pcrrc8t} {pcrr8r,newlatin}  {t1c}{T1}{pcr}{c}{sc}{}
+\installfont {pcrro8t} {pcrro8r,newlatin} {t1} {T1}{pcr}{c}{sl}{}
+\installfont {pcrr8tn} {pcrr8rn,newlatin} {t1} {T1}{pcr}{c}{n} {}
+\installfont {pcrrc8tn}{pcrr8rn,newlatin} {t1c}{T1}{pcr}{c}{sc}{}
+\installfont {pcrro8tn}{pcrro8rn,newlatin}{t1} {T1}{pcr}{c}{sl}{}
+\installfont {pcrb8t}  {pcrb8r,newlatin}  {t1} {T1}{pcr}{b}{n}{}
+\installfont {pcrbc8t} {pcrb8r,newlatin}  {t1c}{T1}{pcr}{b}{sc}{}
+\installfont {pcrbo8t} {pcrbo8r,newlatin} {t1} {T1}{pcr}{b}{sl}{}
+\installfont {pcrb8tn} {pcrb8rn,newlatin} {t1} {T1}{pcr}{b}{n} {}
+\installfont {pcrbc8tn}{pcrb8rn,newlatin} {t1c}{T1}{pcr}{b}{sc}{}
+\installfont {pcrbo8tn}{pcrbo8rn,newlatin}{t1} {T1}{pcr}{b}{sl}{}
 \endinstallfonts
 
 \bye
