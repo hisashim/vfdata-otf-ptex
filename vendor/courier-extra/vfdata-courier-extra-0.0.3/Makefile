@@ -11,6 +11,7 @@ fontinst:	courier-extra-driver.tex
 	cp -r $(TXMF_TL)/fonts/afm/adobe/courier/*.afm ./
 	cp -r $(TXMF_TL)/fonts/afm/adobe/symbol/*.afm ./
 	$(TEX) $<
+	$(TEX) courier-extra-map.tex
 	rm -f *.afm
 	for f in *.pl  ; do pltotf $$f; done
 	for f in *.vpl ; do vptovf $$f; done
