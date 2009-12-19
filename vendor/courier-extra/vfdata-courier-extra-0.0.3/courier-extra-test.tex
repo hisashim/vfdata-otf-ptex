@@ -3,44 +3,60 @@
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
 \usepackage{courier-extra}
-\usepackage{alltt}
-\newcommand{\quickbrownfox}{\textparagraph{} The quick brown fox jumps over the lazy dog.}
+\newcommand{\quickbrownfox}{%
+\textparagraph{} The quick brown fox jumps over the lazy dog.}
+\newcommand{\shapes}{%
+\bgroup
+\upshape\quickbrownfox{} : n \\
+\itshape\selectfont\quickbrownfox{} : it \\
+\slshape\selectfont\quickbrownfox{} : sl \\
+\scshape\selectfont\quickbrownfox{} : sc \\
+\egroup}
 
 \begin{document}
 
 \section{courier-extra-test}
 
-\subsection{Computer Modern}
+\subsection{Computer Modern Typewriter}
 
-\begin{alltt}
-\usefont{T1}{cmtt}{m}{n}\quickbrownfox{} : cmtt-m-n
-\usefont{T1}{cmtt}{m}{sc}\quickbrownfox{} : cmtt-m-sc
-\usefont{T1}{cmtt}{m}{sl}\quickbrownfox{} : cmtt-m-sl
-\end{alltt}
+\normalfont
+\fontfamily{cmtt}\selectfont
+family: cmtt \\
+series: m \\
+shapes: \\
+\shapes
+\normalfont
 
-\subsection{Courier with extra weights and variants}
+\subsection{Courier with extra weights and widths}
 
-\begin{alltt}
-\usefont{T1}{pcr}{m}{n}\quickbrownfox{} : pcr-m-n
-\usefont{T1}{pcr}{m}{sc}\quickbrownfox{} : pcr-m-sc
-\usefont{T1}{pcr}{m}{sl}\quickbrownfox{} : pcr-m-sl
-
-\usefont{T1}{pcr}{mc}{n}\quickbrownfox{} : pcr-mc-n
-\usefont{T1}{pcr}{mc}{sc}\quickbrownfox{} : pcr-mc-sc
-\usefont{T1}{pcr}{mc}{sl}\quickbrownfox{} : pcr-mc-sl
-
-\usefont{T1}{pcr}{b}{n}\quickbrownfox{} : pcr-b-n
-\usefont{T1}{pcr}{b}{sc}\quickbrownfox{} : pcr-b-sc
-\usefont{T1}{pcr}{b}{sl}\quickbrownfox{} : pcr-b-sl
-
-\usefont{T1}{pcr}{cb}{n}\quickbrownfox{} : pcr-bc-n
-\usefont{T1}{pcr}{cb}{sc}\quickbrownfox{} : pcr-bc-sc
-\usefont{T1}{pcr}{cb}{sl}\quickbrownfox{} : pcr-bc-sl
-\end{alltt}
+\normalfont
+\fontfamily{pcr}\selectfont
+family: pcr \\
+%
+\mdseries
+series: m \\
+shapes: \\
+\shapes
+%
+\fontseries{mc}\selectfont
+series: mc \\
+shapes: \\
+\shapes
+%
+\bfseries
+series: b \\
+shapes: \\
+\shapes
+%
+\fontseries{bc}\selectfont
+series: bc \\
+shapes: \\
+\shapes
+\normalfont
 
 \subsection{To do}
 \begin{itemize}
-  \item Support for symbols (ts1 encoding)
+  \item Support for other width
 \end{itemize}
 
 \end{document}

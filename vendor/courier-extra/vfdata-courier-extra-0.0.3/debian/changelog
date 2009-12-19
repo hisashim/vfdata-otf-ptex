@@ -1,8 +1,8 @@
 vfdata-courier-extra (0.0.3-0+0hisashim1) unstable; urgency=low
 
-  * Add support for slant (oblique) and small caps. 
+  * Add support for slant (oblique), small caps, and symbols.
 
- -- Hisashi MORITA <hisashim@users.sourceforge.net>  Sat, 19 Dec 2009 03:08:05 +0900
+ -- Hisashi MORITA <hisashim@users.sourceforge.net>  Sat, 20 Dec 2009 03:08:05 +0900
 
 vfdata-courier-extra (0.0.2-0+0hisashim1) unstable; urgency=low
 
