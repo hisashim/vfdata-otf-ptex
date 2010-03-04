@@ -1,16 +1,21 @@
 \documentclass{article}
 
+\usepackage[margin={15mm}]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
 \usepackage{courier-extra}
 \newcommand{\quickbrownfox}{%
 \textparagraph{} The quick brown fox jumps over the lazy dog.}
+\newcommand{\ascii}{ !"\#\$\%\&'()*+,-./0123456789:;<=>?\\
+@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\textbackslash{}]\textasciicircum{}\_\\
+`abcdefghijklmnopqrstuvwxyz\{|\}\textasciitilde{}}
 \newcommand{\shapes}{%
 \bgroup
 \upshape\quickbrownfox{} : n \\
 \itshape\selectfont\quickbrownfox{} : it \\
 \slshape\selectfont\quickbrownfox{} : sl \\
 \scshape\selectfont\quickbrownfox{} : sc \\
+\noindent\ascii \\
 \egroup}
 
 \begin{document}
