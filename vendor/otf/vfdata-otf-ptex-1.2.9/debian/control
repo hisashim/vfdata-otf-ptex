@@ -7,7 +7,7 @@ Standards-Version: 3.7.2
 
 Package: vfdata-otf-ptex
 Architecture: all
-Depends: ptex-bin, dvipdfmx, cmap-adobe-japan1, cmap-adobe-japan2
+Depends: ptex-bin, dvipdfmx | texlive-base (>=2009-8), cmap-adobe-japan1, cmap-adobe-japan2
 Recommends: ghostscript, cmap-adobe-gb1, cmap-adobe-cns1, cmap-adobe-korea1
 Suggests: okumura-clsfiles
 Description: Virtual font files and macros to use OpenType fonts in pTeX

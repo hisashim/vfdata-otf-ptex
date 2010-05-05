@@ -33,6 +33,10 @@ then
 else
   echo "### Neither 50dvipdfmx.cnf or 80DVIPDFMx.cnf found."
   ls -la /etc/texmf/texmf.d/
+  echo "### Creating 80DVIPDFMx.cnf..."
+  echo 'CMAPINPUTS = .;/usr/share/fonts/cmap//' >> /etc/texmf/texmf.d/80DVIPDFMx.cnf
+  echo "### /etc/texmf/texmf.d/80DVIPDFMx.cnf"
+  cat /etc/texmf/texmf.d/80DVIPDFMx.cnf
 fi
 update-texmf
 
