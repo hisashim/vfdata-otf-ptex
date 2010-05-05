@@ -2,6 +2,6 @@
 
 PACKAGE=vfdata-otf-ptex
 SOFTWARE_VERSION=1.2.9
-PACKAGE_REVISION=0+0hisashim6
+PACKAGE_REVISION=0+0hisashim7
 
 include ../common.mk
