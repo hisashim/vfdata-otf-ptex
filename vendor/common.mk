@@ -47,12 +47,15 @@ debuild-distclean: debuild-clean
 	rm -f $(DEBFILE_BASENAME)*.dsc
 	rm -f $(DEBFILE_BASENAME)*.deb
 
-pbuilder-build: $(DEBFILE_BASENAME).dsc $(PACKAGE)_$(SOFTWARE_VERSION).orig.tar.gz
+pbuilder-build: $(DEBFILE_BASENAME).dsc
 	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; \
 	  then echo 'Error: Type "make debuild-build" to generate .dsc.'; \
 	fi
 	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; \
-	  then echo 'Error: Type "make debuild-build" to generate .tar.gz.'; \
+	  then echo 'Warning: Type "make debuild-build" to generate .tar.gz.'; \
+	fi
+	@if [ ! -f $(DEBFILE_BASENAME).tar.bz2 ]; \
+	  then echo 'Warning: Type "make debuild-build" to generate .tar.bz2.'; \
 	fi
 	(cd $(DIR) \
 	&& sudo pbuilder build \
@@ -85,12 +88,15 @@ pbuilder-test: $(DEBFILE_BASENAME)_all.deb
 pbuilder-testclean:
 	sudo rm -f /var/cache/pbuilder/result/courier-extra-test.*
 
-cowbuilder-build: $(DEBFILE_BASENAME).dsc $(PACKAGE)_$(SOFTWARE_VERSION).orig.tar.gz
+cowbuilder-build: $(DEBFILE_BASENAME).dsc
 	@if [ ! -f $(DEBFILE_BASENAME).dsc ]; \
 	  then echo 'Error: Type "make debuild-build" to generate .dsc.'; \
 	fi
 	@if [ ! -f $(DEBFILE_BASENAME).tar.gz ]; \
-	  then echo 'Error: Type "make debuild-build" to generate .tar.gz.'; \
+	  then echo 'Warning: Type "make debuild-build" to generate .tar.gz.'; \
+	fi
+	@if [ ! -f $(DEBFILE_BASENAME).tar.bz2 ]; \
+	  then echo 'Warning: Type "make debuild-build" to generate .tar.bz2.'; \
 	fi
 	sudo cowbuilder --build \
 	                --hookdir pbuilder-hooks \
