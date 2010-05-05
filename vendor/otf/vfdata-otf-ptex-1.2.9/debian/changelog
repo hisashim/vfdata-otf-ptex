@@ -1,3 +1,17 @@
+vfdata-otf-ptex (1.2.9-0+0hisashim7) unstable; urgency=low
+
+  * Incorporate latest binary distribution by Kakuto-san. 
+    http://w32tex.org/current/ChangeLog
+    > [2009/09/26]
+    > (01) otf.tar.bz2
+    >      updated documents because they are very old.
+    > (02) otfdevel.tar.bz2
+    >      updated documents because they are very old. 
+
+  * Update examples/my-pseudo-otf.map to support more weights.
+
+ -- Hisashi MORITA <hisashim@users.sourceforge.net>  Sat, 06 Mar 2010 00:40:38 +0900
+
 vfdata-otf-ptex (1.2.9-0+0hisashim6) unstable; urgency=low
 
   * Change target distribution from etch to unstable (may still work
