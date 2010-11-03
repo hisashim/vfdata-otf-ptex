@@ -45,6 +45,22 @@ echo "### Copying test result to /var/cache/pbuilder/result..."
 cp -v courier-extra-test.* /var/cache/pbuilder/result
 echo "### Cleaning up..."
 rm -v courier-extra-test.{tex,aux,log,dvi,pdf}
+echo "### Another test document..."
+cat /usr/share/texmf-texlive/tex/latex/base/nfssfont.tex \
+| sed 's/\(\\ifx\\noinit!\\else\\init\\fi\)/%% overwriting init\n% \1/' \
+| sed 's/\(\\endinput\)/% \1/' \
+| sed 's/\( \\typein\[\\currfontname\]%\)/% \1/' \
+| sed 's/\(   {Input external font name, e.g., cmr10^^J%\)/% \1/' \
+| sed 's/\(    (or <enter> for NFSS classification of font):}%\)/% \1/' \
+> pcrr8t.tex
+echo '\\def\\currfontname{pcrr8t}' >> pcrr8t.tex
+echo '\\init\\bigtest\\bye' >> pcrr8t.tex
+echo '\\endinput' >> pcrr8t.tex
+diff -u /usr/share/texmf-texlive/tex/latex/base/nfssfont.tex pcrr8t.tex
+latex pcrr8t.tex
+dvipdfmx -f courier-extra.map -o pcrr8t.pdf pcrr8t.dvi
+cp -v pcrr8t.* /var/cache/pbuilder/result
+rm -v pcrr8t.{tex,aux,log,dvi,pdf}
 echo "### Testing uninstallation..."
 dpkg --remove vfdata-courier-extra
 dpkg --install /var/cache/pbuilder/result/${DEBFILE_BASENAME}_all.deb
