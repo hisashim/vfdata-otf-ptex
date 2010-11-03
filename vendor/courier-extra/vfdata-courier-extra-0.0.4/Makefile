@@ -76,9 +76,9 @@ test:	fcrpfb $(TESTPDFS) courier-extra-test.pdf
 	$(TEX) $<
 %-testfont.tex:	$(TEXMF_TL)/tex/plain/base/testfont.tex
 	@sed 's/\(\\ifx\\noinit!\\else\\init\\fi\)/%% overwriting init\n% \1/' < $< > $@
-	@echo '\def\init{\def\fontname{$(*)}\startfont' >> $@
-	@echo '  \$(TESTNAME)}' >> $@
-	@echo '\init\bye' >> $@
+	@echo '\\def\init{\\def\\fontname{$(*)}\\startfont' >> $@
+	@echo '  \\$(TESTNAME)}' >> $@
+	@echo '\\init\\bye' >> $@
 	# -diff -u $< $@
 %-nfssfont.tex:	$(TEXMF_TL)/tex/latex/base/nfssfont.tex
 	@sed 's/\(\\ifx\\noinit!\\else\\init\\fi\)/%% overwriting init\n% \1/' < $< \
@@ -87,9 +87,9 @@ test:	fcrpfb $(TESTPDFS) courier-extra-test.pdf
 	| sed 's/\(   {Input external font name, e.g., cmr10^^J%\)/% \1/' \
 	| sed 's/\(    (or <enter> for NFSS classification of font):}%\)/% \1/' \
 	> $@
-	@echo '\def\currfontname{$(*)}' >> $@
-	@echo '\init\$(TESTNAME)\bye' >> $@
-	@echo '\endinput' >> $@
+	@echo '\\def\\currfontname{$(*)}' >> $@
+	@echo '\\init\\$(TESTNAME)\\bye' >> $@
+	@echo '\\endinput' >> $@
 	# -diff -u $< $@
 %-fontchart.tex:	$(TEXMF_TL)/tex/plain/base/fontchart.tex
 	@sed 's/\(\\read-1 to \\fontname\)/% \1\n\\def\\fontname{$(*)\\relax}/'< $< \
