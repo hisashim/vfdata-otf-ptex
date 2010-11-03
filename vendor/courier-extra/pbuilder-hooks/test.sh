@@ -39,32 +39,31 @@ else
 fi
 update-texmf
 
+echo "### Copying source package..."
+cp -v /var/cache/pbuilder/result/${DEBFILE_BASENAME}.dsc ./
+cp -v /var/cache/pbuilder/result/${DEBFILE_BASENAME}.tar.gz ./
+cp -v /var/cache/pbuilder/result/${DEBFILE_BASENAME}_*.changes ./
+echo "### Extracting source package..."
+tar fxz ${DEBFILE_BASENAME}.tar.gz
+echo "### Processing test documents..."
+cd ${PACKAGE}-${SOFTWARE_VERSION}
+apt-get install t1utils
+make test
+make clean
+echo "### Copying test result to /var/cache/pbuilder/result..."
+cp -v pcr*.pdf /var/cache/pbuilder/result
+echo "### Cleaning up..."
+rm -v pcr*.{tex,aux,log,dvi,pdf}
+cd -
 echo "### Copying test document..."
 cp -v /usr/share/doc/vfdata-courier-extra/examples/courier-extra-test.tex ./
-echo "### Processing LaTeX document..."
+echo "### Processing test document..."
 latex courier-extra-test.tex
 dvipdfmx -f courier-extra.map courier-extra-test.dvi
 echo "### Copying test result to /var/cache/pbuilder/result..."
 cp -v courier-extra-test.* /var/cache/pbuilder/result
 echo "### Cleaning up..."
 rm -v courier-extra-test.{tex,aux,log,dvi,pdf}
-echo "### Another test document..."
-TESTFONT=pcrr8t
-cat /usr/share/texmf-texlive/tex/latex/base/nfssfont.tex \
-| sed 's/\(\\ifx\\noinit!\\else\\init\\fi\)/%% overwriting init\n% \1/' \
-| sed 's/\(\\endinput\)/% \1/' \
-| sed 's/\( \\typein\[\\currfontname\]%\)/% \1/' \
-| sed 's/\(   {Input external font name, e.g., cmr10^^J%\)/% \1/' \
-| sed 's/\(    (or <enter> for NFSS classification of font):}%\)/% \1/' \
-> ${TESTFONT}.tex
-echo "\\\\def\\\\currfontname{${TESTFONT}}" >> ${TESTFONT}.tex
-echo '\\init\\bigtest\\bye' >> ${TESTFONT}.tex
-echo '\\endinput' >> ${TESTFONT}.tex
-diff -u /usr/share/texmf-texlive/tex/latex/base/nfssfont.tex ${TESTFONT}.tex
-latex ${TESTFONT}.tex
-dvipdfmx -f courier-extra.map -o ${TESTFONT}.pdf ${TESTFONT}.dvi
-cp -v ${TESTFONT}.* /var/cache/pbuilder/result
-rm -v ${TESTFONT}.{tex,aux,log,dvi,pdf}
 echo "### Testing uninstallation..."
 dpkg --remove vfdata-courier-extra
 dpkg --install /var/cache/pbuilder/result/${DEBFILE_BASENAME}_all.deb
