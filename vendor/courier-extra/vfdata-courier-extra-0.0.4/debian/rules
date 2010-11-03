@@ -37,7 +37,7 @@ build-stamp: configure-stamp
 	#docbook-to-man debian/vfdata-otf-ptex.sgml > vfdata-otf-ptex.1
 
 	touch $@
-	-$(MAKE) fontinst
+	-$(MAKE)
 
 clean:
 	dh_testdir
