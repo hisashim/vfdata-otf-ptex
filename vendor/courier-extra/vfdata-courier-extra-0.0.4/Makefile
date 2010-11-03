@@ -26,7 +26,7 @@ FONTS	= \
 	pcrb8t	pcrbc8t	pcrbo8t	pcrb8tn	pcrbc8tn	pcrbo8tn	\
 	pcrr8c		pcrro8c	pcrr8cn			pcrro8cn	\
 	pcrb8c		pcrbo8c	pcrb8cn			pcrbo8cn
-TESTDOCS= nfssfont
+TESTDOC	= nfssfont
 TESTPDFS= $(foreach f,$(FONTS),$(f)-$(LABEL).pdf)
 
 all:	fontinst fcrpfb
@@ -66,8 +66,8 @@ install:
 	            tex/latex/courier-extra ;
 
 test:	fcrpfb $(TESTPDFS) courier-extra-test.pdf
-%-$(LABEL).pdf:	$(foreach t,$(TESTDOCS),%-$(t).pdf)
-	pdftk $(foreach t,$(TESTDOCS),$(*)-$(t).pdf) cat output $@
+%-$(LABEL).pdf:	%-$(TESTDOC).pdf
+	cp $< $@
 %-testfont.dvi:	%-testfont.tex
 	$(TEX) $<
 %-nfssfont.dvi:	%-nfssfont.tex
@@ -129,7 +129,7 @@ search:
 	done
 clean:	
 	rm -f *.fd *.vpl *.mtx *.pl *.log *.aux *.dvi *.t1asm *.t1
-	rm -f $(foreach t,$(TESTDOCS),*-$(t).*)
+	rm -f *-$(TESTDOC).*
 	rm -f pcr*.pfb
 cleanall: clean
 	rm -f *.afm *.vf *.tfm *.pdf *.pfb
