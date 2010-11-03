@@ -2,7 +2,9 @@ etc/texmf/dvipdfm
 usr/share/doc/vfdata-courier-extra
 usr/share/texmf-texlive/fonts/vf/public/courier-extra
 usr/share/texmf-texlive/fonts/tfm/public/courier-extra
+usr/share/texmf-texlive/fonts/type1/public/courier-extra
 usr/share/texmf-texlive/tex/latex/courier-extra
 usr/share/texmf/fonts/vf/public
 usr/share/texmf/fonts/tfm/public
+usr/share/texmf/fonts/type1/public
 usr/share/texmf/tex/latex

@@ -26,11 +26,10 @@ FONTS	= \
 	pcrb8t	pcrbc8t	pcrbo8t	pcrb8tn	pcrbc8tn	pcrbo8tn	\
 	pcrr8c		pcrro8c	pcrr8cn			pcrro8cn	\
 	pcrb8c		pcrbo8c	pcrb8cn			pcrbo8cn
-FCRPFB	= fcrr8a.pfb fcrb8a.pfb fcrro8a.pfb fcrbo8a.pfb
 TESTDOCS= nfssfont
 TESTPDFS= $(foreach f,$(FONTS),$(f)-$(LABEL).pdf)
 
-all:	fontinst $(FCRPFB)
+all:	fontinst fcrpfb
 fontinst:	courier-extra-driver.tex
 	cp -r $(TEXMF_TL)/fonts/afm/adobe/courier/*.afm ./
 	cp -r $(TEXMF_TL)/fonts/afm/adobe/symbol/*.afm ./
@@ -39,12 +38,20 @@ fontinst:	courier-extra-driver.tex
 	rm -f *.afm
 	for f in *.pl  ; do pltotf $$f; done
 	for f in *.vpl ; do vptovf $$f; done
+fcrpfb:	fcrr8a.t1 fcrb8a.t1 fcrro8a.t1 fcrbo8a.t1
+	cp fcrr8a.t1 fcrr8a.pfb
+	cp fcrb8a.t1 fcrb8a.pfb
+	cp fcrro8a.t1 fcrro8a.pfb
+	cp fcrbo8a.t1 fcrbo8a.pfb
 install:	
-	mkdir -p $(DESTDIR)$(TEXMF_TL)/fonts/{tfm,vf}/public/courier-extra \
+	mkdir -p $(DESTDIR)$(TEXMF_TL)/fonts/tfm/public/courier-extra \
+	         $(DESTDIR)$(TEXMF_TL)/fonts/vf/public/courier-extra \
+	         $(DESTDIR)$(TEXMF_TL)/fonts/type1/public/courier-extra \
 	         $(DESTDIR)/etc/texmf/dvipdfm \
 	         $(DESTDIR)$(TEXMF_TL)/tex/latex/courier-extra
 	cp -r *.tfm $(DESTDIR)$(TEXMF_TL)/fonts/tfm/public/courier-extra
 	cp -r *.vf  $(DESTDIR)$(TEXMF_TL)/fonts/vf/public/courier-extra
+	cp -r fcr*.pfb $(DESTDIR)$(TEXMF_TL)/fonts/vf/public/courier-extra
 	cp -r *.map $(DESTDIR)/etc/texmf/dvipdfm
 	cp -r *.fd  $(DESTDIR)$(TEXMF_TL)/tex/latex/courier-extra
 	cp -r *.sty $(DESTDIR)$(TEXMF_TL)/tex/latex/courier-extra
@@ -53,10 +60,12 @@ install:
 	            fonts/tfm/public/courier-extra ; \
 	ln -s       $(TEXMF_TL)/fonts/vf/public/courier-extra \
 	            fonts/vf/public/courier-extra ; \
+	ln -s       $(TEXMF_TL)/fonts/type1/public/courier-extra \
+	            fonts/type1/public/courier-extra ; \
 	ln -s       $(TEXMF_TL)/tex/latex/courier-extra \
 	            tex/latex/courier-extra ;
 
-test:	$(FCRPFB) $(TESTPDFS) courier-extra-test.pdf
+test:	fcrpfb $(TESTPDFS) courier-extra-test.pdf
 %-$(LABEL).pdf:	$(foreach t,$(TESTDOCS),%-$(t).pdf)
 	pdftk $(foreach t,$(TESTDOCS),$(*)-$(t).pdf) cat output $@
 %-testfont.dvi:	%-testfont.tex
@@ -90,8 +99,6 @@ test:	$(FCRPFB) $(TESTPDFS) courier-extra-test.pdf
 	vptovf $< $@
 %.tfm:	%.pl
 	pltotf $< $@
-fcr%.pfb:	fcr%.t1
-	cp $< $@
 fcr%.t1asm:	pcr%.t1asm fcr%.t1asm.patch
 	cp $< $@
 	patch $@ < $@.patch
