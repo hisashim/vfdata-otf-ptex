@@ -1,0 +1,56 @@
+--- pcrbo8a.t1asm
++++ fcrbo8a.t1asm
+@@ -4911,12 +4911,17 @@
+ 	endchar
+ 	} |-
+ /quoteleft {
+-	219 600 hsbw
++	382 600 hsbw
+ 	0 290 vstem
+ 	583 -20 hstem
+ 	18 4 callsubr
+-	146 309 rmoveto
+-	423 callsubr
++	174 309 rmoveto
++	dotsection
++	-28 274 rlineto
++	-146 hlineto
++	64 -274 rlineto
++	closepath
++	dotsection
+ 	endchar
+ 	} |-
+ /a {
+@@ -5924,16 +5929,25 @@
+ 	448 callsubr
+ 	} |-
+ /quotedblleft {
+-	148 600 hsbw
++	277 600 hsbw
+ 	0 495 vstem
+ 	583 -20 hstem
+ 	108 4 callsubr
+-	351 309 rmoveto
+-	423 callsubr
+-	18 4 callsubr
+-	-59 hmoveto
+-	423 callsubr
+-	endchar
++	381 309 rmoveto
++	dotsection
++	-30 274 rlineto
++	-146 hlineto
++	66 -274 rlineto
++	closepath
++	dotsection
++        18 4 callsubr
++	-95 hmoveto
++	dotsection
++	-30 274 rlineto
++	-146 hlineto
++	66 -274 rlineto
++	closepath
++        endchar
+ 	} |-
+ /guillemotleft {
+ 	96 600 hsbw
