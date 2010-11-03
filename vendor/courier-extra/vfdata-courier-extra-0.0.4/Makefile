@@ -122,7 +122,11 @@ search:
 	done
 clean:	
 	rm -f *.fd *.vpl *.mtx *.pl *.log *.aux *.dvi *.t1asm *.t1
+	rm -f $(foreach f,$(FONTS),$(f)-$(LABEL).tex)
 cleanall: clean
 	rm -f *.afm *.vf *.tfm *.pdf *.pfb
+	rm -f courier-extra-dvipdfm.map
+	rm -f courier-extra-dvips.map
+	rm -f courier-extra-rec.tex
 .PHONY:	all fontinst test install clean cleanall search
 .SECONDARY:
