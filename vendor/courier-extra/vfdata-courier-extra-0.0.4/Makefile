@@ -47,5 +47,5 @@ clean:
 	rm -f *.{fd,vpl,mtx,pl,log,aux,dvi}
 cleanall: clean
 	rm -f *.{afm,vf,tfm,pdf}
-.PHONY:	fontinst test install clean cleanall
-SECONDARY:	
+.PHONY:	all fontinst test install clean cleanall
+.SECONDARY:	
