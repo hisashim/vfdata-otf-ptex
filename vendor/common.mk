@@ -81,7 +81,7 @@ pbuilder-test: $(DEBFILE_BASENAME)_all.deb
 	&& sudo pbuilder execute \
 	                 --hookdir ../pbuilder-hooks \
 	                 --bindmounts "/var/cache/pbuilder/result"  -- \
-	../pbuilder-hooks/test.sh $(DEBFILE_BASENAME) 2>&1 \
+	../pbuilder-hooks/test.sh $(PACKAGE) $(SOFTWARE_VERSION) $(PACKAGE_REVISION) 2>&1 \
 	| tee ../$@.log; \
 	cd -)
 
@@ -118,7 +118,7 @@ cowbuilder-test: $(DEBFILE_BASENAME)_all.deb
 	sudo cowbuilder --execute \
 	                --hookdir pbuilder-hooks \
 	                --bindmounts "/var/cache/pbuilder/result" -- \
-	pbuilder-hooks/test.sh $(DEBFILE_BASENAME) 2>&1 \
+	pbuilder-hooks/test.sh $(PACKAGE) $(SOFTWARE_VERSION) $(PACKAGE_REVISION) 2>&1 \
 	| tee $@.log ;
 
 cowbuilder-testclean: pbuilder-testclean

@@ -1,7 +1,10 @@
 #!/bin/sh
-if [ -n "$1" ]
+if [ -n "$1" ] && [ -n "$2" ] && [ -n "$3" ]
   then
-  DEBFILE_BASENAME=$1
+  PACKAGE=$1
+  SOFTWARE_VERSION=$2
+  PACKAGE_REVISION=$3
+  DEBFILE_BASENAME=${PACKAGE}_${SOFTWARE_VERSION}-${PACKAGE_REVISION}
   else
   exit 1
 fi
