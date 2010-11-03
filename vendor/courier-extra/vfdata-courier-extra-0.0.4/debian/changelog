@@ -1,3 +1,9 @@
+vfdata-courier-extra (0.0.4-0+0hisashim1) unstable; urgency=low
+
+  * Fix character mapping problem (quote and backquote).
+
+ -- Hisashi MORITA <hisashim@workbook.org>  Sun, 17 Oct 2010 23:24:18 +0900
+
 vfdata-courier-extra (0.0.3-0+0hisashim1) unstable; urgency=low
 
   * Add support for slant (oblique), small caps, and symbols.
