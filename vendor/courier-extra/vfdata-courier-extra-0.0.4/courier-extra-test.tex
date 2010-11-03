@@ -1,0 +1,68 @@
+\documentclass{article}
+
+\usepackage[margin={15mm}]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{courier-extra}
+\newcommand{\quickbrownfox}{%
+\textparagraph{} The quick brown fox jumps over the lazy dog.}
+\newcommand{\ascii}{ !"\#\$\%\&'()*+,-./0123456789:;<=>?\\
+@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\textbackslash{}]\textasciicircum{}\_\\
+`abcdefghijklmnopqrstuvwxyz\{|\}\textasciitilde{}}
+\newcommand{\shapes}{%
+\bgroup
+\upshape\quickbrownfox{} : n \\
+\itshape\selectfont\quickbrownfox{} : it \\
+\slshape\selectfont\quickbrownfox{} : sl \\
+\scshape\selectfont\quickbrownfox{} : sc \\
+\noindent\ascii \\
+\egroup}
+
+\begin{document}
+
+\section{courier-extra-test}
+
+\subsection{Computer Modern Typewriter}
+
+\normalfont
+\fontfamily{cmtt}\selectfont
+family: cmtt \\
+series: m \\
+shapes: \\
+\shapes
+\normalfont
+
+\subsection{Courier with extra weights and widths}
+
+\normalfont
+\fontfamily{pcr}\selectfont
+family: pcr \\
+%
+\mdseries
+series: m \\
+shapes: \\
+\shapes
+%
+\fontseries{mc}\selectfont
+series: mc \\
+shapes: \\
+\shapes
+%
+\bfseries
+series: b \\
+shapes: \\
+\shapes
+%
+\fontseries{bc}\selectfont
+series: bc \\
+shapes: \\
+\shapes
+\normalfont
+
+\subsection{To do}
+\begin{itemize}
+  \item Support for other width
+\end{itemize}
+
+\end{document}
+
