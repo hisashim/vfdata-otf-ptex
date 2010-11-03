@@ -50,6 +50,14 @@ cd ${PACKAGE}-${SOFTWARE_VERSION}
 apt-get install t1utils
 make test
 make clean
+make test MAP=
+make clean
+make test MAP=courier-extra-pcr
+make clean
+make test MAP=courier-extra-ucr
+make clean
+make test MAP=courier-extra-fcr
+make clean
 echo "### Copying test result to /var/cache/pbuilder/result..."
 cp -v pcr*.pdf /var/cache/pbuilder/result
 echo "### Cleaning up..."
