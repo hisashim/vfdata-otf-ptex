@@ -56,7 +56,7 @@ install:
 	ln -s       $(TEXMF_TL)/tex/latex/courier-extra \
 	            tex/latex/courier-extra ;
 
-test:	courier-extra-test.pdf $(FCRPFB) $(TESTPDFS)
+test:	$(FCRPFB) $(TESTPDFS) courier-extra-test.pdf
 %-$(LABEL).pdf:	$(foreach t,$(TESTDOCS),%-$(t).pdf)
 	pdftk $(foreach t,$(TESTDOCS),$(*)-$(t).pdf) cat output $@
 %-testfont.dvi:	%-testfont.tex
@@ -122,7 +122,8 @@ search:
 	done
 clean:	
 	rm -f *.fd *.vpl *.mtx *.pl *.log *.aux *.dvi *.t1asm *.t1
-	rm -f $(foreach f,$(FONTS),$(f)-$(LABEL).tex)
+	rm -f $(foreach t,$(TESTDOCS),*-$(t).*)
+	rm -f pcr*.pfb
 cleanall: clean
 	rm -f *.afm *.vf *.tfm *.pdf *.pfb
 	rm -f courier-extra-dvipdfm.map
