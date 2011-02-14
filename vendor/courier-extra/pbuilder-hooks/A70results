@@ -1,4 +1,0 @@
-#!/bin/sh
-cd /var/cache/pbuilder/result/
-/usr/bin/dpkg-scanpackages . /dev/null >> /var/cache/pbuilder/result/Packages
-/usr/bin/apt-get update

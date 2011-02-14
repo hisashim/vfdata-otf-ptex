@@ -1,5 +1,0 @@
-#!/bin/sh
-echo 'Making sure fakeroot is executable...'
-/usr/sbin/update-alternatives --auto fakeroot
-echo 'Making sure awk is executable, which is necessary for libpaper1 configuration...'
-/usr/sbin/update-alternatives --auto awk
