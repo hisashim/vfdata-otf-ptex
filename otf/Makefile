@@ -1,11 +1,9 @@
 #!/usr/bin/make
-# Automation for building Debian package
-# Required packages: pbuilder devscripts debhelper time (and their requirements)
-# Usage: make debuild
-#        sudo pbuilder create --distribution etch
-#        make pbuilder-build && \
+# Usage: make pbuilder-build && \
 #          ls /var/cache/pbuilder/result/*.{dsc,tar.gz,diff.gz,build,changes,deb}
 #        make pbuilder-test && ls -al /var/cache/pbuilder/result/
+
+## variables
 
 PACKAGE = vfdata-otf-ptex
 VERSION = 1.2.9
@@ -22,10 +20,12 @@ PBUILDER=cowbuilder
 PBOPTS  = --hookdir pbuilder-hooks \
           --bindmounts "/var/cache/pbuilder/result"
 
-.PHONY: debuild pbuilder-build mostlyclean clean
-.DEFAULT: all
+## targets
 
 all: check pbuilder-build
+
+.PHONY: all check debuild pbuilder-build pbuilder-login pbuilder-test \
+	mostlyclean clean
 
 check:
 	@echo "Checking if Makefile and debian/changelog match."
@@ -34,7 +34,7 @@ check:
 
 debuild:
 	@echo To omit signing, type "make debuild DEBBUILDOPTS='-us -uc'".
-	(cd $(PACKAGE)-$(VERSION); debuild $(DEBBUILDOPTS); cd -)
+	(cd $(DIR); debuild $(DEBBUILDOPTS); cd -)
 
 pbuilder-build: $(DEB).dsc
 	@echo 'Type "make debuild-build" for .dsc, .tar.gz, or .tar.bz2.'
@@ -52,7 +52,7 @@ pbuilder-test: $(DEB)_all.deb
 	pbuilder-hooks/test.sh $(PACKAGE) $(VERSION) $(DEBREV)
 
 mostlyclean:
-	(cd $(PACKAGE)-$(VERSION); fakeroot debian/rules clean; cd -)
+	(cd $(DIR); fakeroot debian/rules clean; cd -)
 	-rm -f $(DEB)*.build $(DEB)*.changes
 
 clean: mostlyclean
