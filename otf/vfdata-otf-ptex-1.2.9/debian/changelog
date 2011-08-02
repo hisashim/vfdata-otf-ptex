@@ -1,3 +1,9 @@
+vfdata-otf-ptex (1.2.9-0+0hisashim8) unstable; urgency=low
+
+  * Install *.map to /etc/texmf/dvipdfmx/ as well (for TeX Live 2009).
+
+ -- Hisashi Morita <hisashim@users.sourceforge.net>  Sun, 31 Jul 2011 01:52:20 +0900
+
 vfdata-otf-ptex (1.2.9-0+0hisashim7) unstable; urgency=low
 
   * Incorporate latest binary distribution by Kakuto-san. 
