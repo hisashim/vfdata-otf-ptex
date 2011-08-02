@@ -15,7 +15,8 @@ DEB_DESTDIR?=$(CURDIR)/debian/$(PACKAGE)
 TXMF=/usr/share/texmf
 TXMF_TL=/usr/share/texmf-texlive
 FNTDIR=$(DEB_DESTDIR)$(TXMF)/fonts
-MAPDIR=$(DEB_DESTDIR)/etc/texmf/dvipdfm
+MAPDIRS=$(DEB_DESTDIR)/etc/texmf/dvipdfm \
+        $(DEB_DESTDIR)/etc/texmf/dvipdfmx
 STYDIR=$(DEB_DESTDIR)$(TXMF)/ptex/platex/misc
 FNTDIR_TL=$(DEB_DESTDIR)$(TXMF_TL)/fonts
 STYDIR_TL=$(DEB_DESTDIR)$(TXMF_TL)/ptex/platex/misc
@@ -70,7 +71,11 @@ install: build
 	cp -r share/texmf/fonts/tfm/ptex/otf $(FNTDIR)/tfm/ptex/otf
 	cp -r share/texmf/fonts/vf/ptex/otf $(FNTDIR)/vf/ptex/otf
 	cp -r share/texmf/fonts/ofm/public/otf $(FNTDIR)/ofm/public/otf
-	cp -r share/texmf/doc/misc/otf/*.map $(MAPDIR)
+	for d in $(MAPDIRS); do \
+	  if [ -d $$d ]; then \
+	    cp -r share/texmf/doc/misc/otf/*.map $$d; \
+	  fi; \
+	done
 	cp -r share/texmf/tex/platex/misc/otf/*.sty $(STYDIR)/otf
 	ln -s share/texmf/fonts/tfm/ptex/otf $(FNTDIR_TL)/tfm/ptex/otf
 	ln -s share/texmf/fonts/vf/ptex/otf $(FNTDIR_TL)/vf/ptex/otf
