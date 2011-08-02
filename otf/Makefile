@@ -24,7 +24,7 @@ PBOPTS  = --hookdir pbuilder-hooks \
 
 all: check pbuilder-build
 
-.PHONY: all check debuild pbuilder-build pbuilder-login pbuilder-test \
+.PHONY: all check deb pbuilder-build pbuilder-login pbuilder-test \
 	mostlyclean clean
 
 check:
@@ -32,9 +32,10 @@ check:
 	[ "X$(PACKAGE)" == "X$(PACKAGE_CL)" ]
 	[ "X$(VERSION)" == "X$(VERSION_CL)" ]
 
-debuild:
-	@echo To omit signing, type "make debuild DEBBUILDOPTS='-us -uc'".
-	(cd $(DIR); debuild $(DEBBUILDOPTS); cd -)
+deb: $(DEB)_all.deb
+
+$(DEB)_all.deb: pbuilder-build
+	cp /var/cache/pbuilder/result/$@ ./
 
 pbuilder-build: $(DEB).dsc
 	@echo 'Type "make debuild-build" for .dsc, .tar.gz, or .tar.bz2.'
@@ -42,14 +43,16 @@ pbuilder-build: $(DEB).dsc
 	[ -f $(DEB).tar.gz ] || [ -f $(DEB).tar.bz2 ]
 	sudo $(PBUILDER) --build $(PBOPTS) $<
 
-$(DEB).dsc: debuild
-
 pbuilder-login:
 	sudo $(PBUILDER) --login $(PBOPTS)
 
 pbuilder-test: $(DEB)_all.deb
 	sudo $(PBUILDER) --execute $(PBOPTS) -- \
 	pbuilder-hooks/test.sh $(PACKAGE) $(VERSION) $(DEBREV)
+
+$(DEB).dsc:
+	@echo To omit signing, type "make debuild DEBBUILDOPTS='-us -uc'".
+	(cd $(DIR) && debuild $(DEBBUILDOPTS); cd -)
 
 mostlyclean:
 	(cd $(DIR); fakeroot debian/rules clean; cd -)
