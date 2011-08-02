@@ -10,13 +10,15 @@
 #export DH_VERBOSE=1
 
 PACKAGE=vfdata-otf-ptex
+# Setting DEB_DESTDIR manually just like CDBS does
+DEB_DESTDIR?=$(CURDIR)/debian/$(PACKAGE)
 TXMF=/usr/share/texmf
 TXMF_TL=/usr/share/texmf-texlive
-FNTDIR=$(CURDIR)/debian/$(PACKAGE)$(TXMF)/fonts
-MAPDIR=$(CURDIR)/debian/$(PACKAGE)/etc/texmf/dvipdfm
-STYDIR=$(CURDIR)/debian/$(PACKAGE)$(TXMF)/ptex/platex/misc
-FNTDIR_TL=$(CURDIR)/debian/$(PACKAGE)$(TXMF_TL)/fonts
-STYDIR_TL=$(CURDIR)/debian/$(PACKAGE)$(TXMF_TL)/ptex/platex/misc
+FNTDIR=$(DEB_DESTDIR)$(TXMF)/fonts
+MAPDIR=$(DEB_DESTDIR)/etc/texmf/dvipdfm
+STYDIR=$(DEB_DESTDIR)$(TXMF)/ptex/platex/misc
+FNTDIR_TL=$(DEB_DESTDIR)$(TXMF_TL)/fonts
+STYDIR_TL=$(DEB_DESTDIR)$(TXMF_TL)/ptex/platex/misc
 
 CFLAGS = -Wall -g
 
@@ -83,8 +85,8 @@ install: build
 	ln -s share/texmf/fonts/vf/ptex/hiraprop $(FNTDIR_TL)/vf/ptex/hiraprop
 	ln -s share/texmf/tex/platex/misc/hiraprop $(STYDIR_TL)/hiraprop
 	# install hiraprop docs
-	cp -r share/texmf/doc/misc/hiraprop/*.txt $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/$(PACKAGE)/hiraprop
-	cp -r share/texmf/doc/misc/hiraprop/*.tex $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/$(PACKAGE)/hiraprop
+	cp -r share/texmf/doc/misc/hiraprop/*.txt $(DEB_DESTDIR)/usr/share/doc/$(PACKAGE)/hiraprop
+	cp -r share/texmf/doc/misc/hiraprop/*.tex $(DEB_DESTDIR)/usr/share/doc/$(PACKAGE)/hiraprop
 
 # Build architecture-independent files here.
 binary-indep: build install
