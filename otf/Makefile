@@ -15,7 +15,7 @@ PACKAGE_CL=$(shell head -n 1 $(DIR)/debian/changelog | cut -d' ' -f 1)
 VERSION_CL=$(shell head -n 1 $(DIR)/debian/changelog \
                    | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\1/')
 DISTNAME=unstable
-DEBBUILDOPTS= 
+DEBUILDOPTS= 
 PBUILDER=cowbuilder
 PBOPTS  = --hookdir pbuilder-hooks \
           --bindmounts "/var/cache/pbuilder/result"
@@ -51,8 +51,8 @@ pbuilder-test: $(DEB)_all.deb
 	pbuilder-hooks/test.sh $(PACKAGE) $(VERSION) $(DEBREV)
 
 $(DEB).dsc:
-	@echo To omit signing, type "make debuild DEBBUILDOPTS='-us -uc'".
-	(cd $(DIR) && debuild $(DEBBUILDOPTS); cd -)
+	@echo To omit signing, type "make debuild DEBUILDOPTS='-us -uc'".
+	(cd $(DIR) && debuild $(DEBUILDOPTS); cd -)
 
 mostlyclean:
 	(cd $(DIR); fakeroot debian/rules clean; cd -)
