@@ -7,12 +7,12 @@
 
 PACKAGE = vfdata-otf-ptex
 VERSION = 1.2.9
-DIR     = $(PACKAGE)-$(VERSION)
-DEBREV  = $(shell head -n 1 $(DIR)/debian/changelog \
+DEBREV  = $(shell head -n 1 $(PACKAGE)/debian/changelog \
                   | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\2/')
+RELEASE = $(PACKAGE)-$(VERSION)
 DEB     = $(PACKAGE)_$(VERSION)-$(DEBREV)
-PACKAGE_CL=$(shell head -n 1 $(DIR)/debian/changelog | cut -d' ' -f 1)
-VERSION_CL=$(shell head -n 1 $(DIR)/debian/changelog \
+PACKAGE_CL=$(shell head -n 1 $(PACKAGE)/debian/changelog | cut -d' ' -f 1)
+VERSION_CL=$(shell head -n 1 $(PACKAGE)/debian/changelog \
                    | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\1/')
 DISTNAME=unstable
 DEBUILDOPTS= 
@@ -50,12 +50,15 @@ pbuilder-test: $(DEB)_all.deb
 	sudo $(PBUILDER) --execute $(PBOPTS) -- \
 	pbuilder-hooks/test.sh $(PACKAGE) $(VERSION) $(DEBREV)
 
-$(DEB).dsc:
+$(DEB).dsc: $(RELEASE)
 	@echo To omit signing, type "make debuild DEBUILDOPTS='-us -uc'".
-	(cd $(DIR) && debuild $(DEBUILDOPTS); cd -)
+	(cd $(PACKAGE)-$(VERSION) && debuild $(DEBUILDOPTS); cd -)
+
+$(RELEASE):
+	cp -r $(PACKAGE) $@
 
 mostlyclean:
-	(cd $(DIR); fakeroot debian/rules clean; cd -)
+	-rm -fr $(RELEASE)
 	-rm -f $(DEB)*.build $(DEB)*.changes
 
 clean: mostlyclean
