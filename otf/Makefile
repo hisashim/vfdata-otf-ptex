@@ -62,6 +62,7 @@ $(RELEASE): $(PRODUCT)
 
 mostlyclean:
 	-rm -fr $(RELEASE)
+	-rm -f $(DEB).tar.gz
 	-rm -f $(DEB)*.build $(DEB)*.changes
 
 clean: mostlyclean
