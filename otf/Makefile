@@ -6,15 +6,12 @@
 ## variables
 
 PACKAGE = vfdata-otf-ptex
-VERSION = 1.2.9
+VERSION = $(shell head -n 1 $(PACKAGE)/debian/changelog \
+                  | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\1/')
 DEBREV  = $(shell head -n 1 $(PACKAGE)/debian/changelog \
                   | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\2/')
 RELEASE = $(PACKAGE)-$(VERSION)
 DEB     = $(PACKAGE)_$(VERSION)-$(DEBREV)
-PACKAGE_CL=$(shell head -n 1 $(PACKAGE)/debian/changelog | cut -d' ' -f 1)
-VERSION_CL=$(shell head -n 1 $(PACKAGE)/debian/changelog \
-                   | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\1/')
-DISTNAME=unstable
 DEBUILDOPTS= 
 PBUILDER=cowbuilder
 PBOPTS  = --hookdir pbuilder-hooks \
@@ -22,15 +19,10 @@ PBOPTS  = --hookdir pbuilder-hooks \
 
 ## targets
 
-all: check pbuilder-build
+all: pbuilder-build
 
-.PHONY: all check deb pbuilder-build pbuilder-login pbuilder-test \
+.PHONY: all deb pbuilder-build pbuilder-login pbuilder-test \
 	mostlyclean clean
-
-check:
-	@echo "Checking if Makefile and debian/changelog match."
-	[ "X$(PACKAGE)" == "X$(PACKAGE_CL)" ]
-	[ "X$(VERSION)" == "X$(VERSION_CL)" ]
 
 deb: $(DEB)_all.deb
 
