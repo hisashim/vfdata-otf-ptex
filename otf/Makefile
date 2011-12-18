@@ -5,10 +5,11 @@
 
 ## variables
 
+PRODUCT = otf
 PACKAGE = vfdata-otf-ptex
-VERSION = $(shell head -n 1 $(PACKAGE)/debian/changelog \
+VERSION = $(shell head -n 1 $(PRODUCT)/debian/changelog \
                   | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\1/')
-DEBREV  = $(shell head -n 1 $(PACKAGE)/debian/changelog \
+DEBREV  = $(shell head -n 1 $(PRODUCT)/debian/changelog \
                   | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\2/')
 RELEASE = $(PACKAGE)-$(VERSION)
 DEB     = $(PACKAGE)_$(VERSION)-$(DEBREV)
@@ -44,10 +45,10 @@ pbuilder-test: $(DEB)_all.deb
 
 $(DEB).dsc: $(RELEASE)
 	@echo To omit signing, type "make debuild DEBUILDOPTS='-us -uc'".
-	(cd $(PACKAGE)-$(VERSION) && debuild $(DEBUILDOPTS); cd -)
+	(cd $(RELEASE) && debuild $(DEBUILDOPTS); cd -)
 
 $(RELEASE):
-	cp -r $(PACKAGE) $@
+	cp -r $(PRODUCT) $@
 
 mostlyclean:
 	-rm -fr $(RELEASE)
