@@ -1,26 +1,35 @@
 #!/usr/bin/make
-# Usage: make pbuilder-build && \
-#          ls /var/cache/pbuilder/result/*.{dsc,tar.gz,diff.gz,build,changes,deb}
+# Usage: make clean all
 #        make pbuilder-test && ls -al /var/cache/pbuilder/result/
 
 ## variables
 
+# metadata
+
 PRODUCT = otf
-PACKAGE = vfdata-otf-ptex
+PACKAGE = $(shell head -n 1 $(PRODUCT)/debian/changelog \
+                  | cut -d' ' -f 1)
 VERSION = $(shell head -n 1 $(PRODUCT)/debian/changelog \
                   | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\1/')
 DEBREV  = $(shell head -n 1 $(PRODUCT)/debian/changelog \
                   | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\2/')
-RELEASE = $(PACKAGE)-$(VERSION)
-DEB     = $(PACKAGE)_$(VERSION)-$(DEBREV)
+
+# programs
+
+TAR_XVCS= tar --exclude=".svn" --exclude=".git" --exclude=".hg"
 DEBUILDOPTS= 
 PBUILDER=cowbuilder
 PBOPTS  = --hookdir pbuilder-hooks \
           --bindmounts "/var/cache/pbuilder/result"
 
+# files and directories
+
+RELEASE = $(PACKAGE)-$(VERSION)
+DEB     = $(PACKAGE)_$(VERSION)-$(DEBREV)
+
 ## targets
 
-all: pbuilder-build
+all: deb
 
 .PHONY: all deb pbuilder-build pbuilder-login pbuilder-test \
 	mostlyclean clean
@@ -47,8 +56,9 @@ $(DEB).dsc: $(RELEASE)
 	@echo To omit signing, type "make debuild DEBUILDOPTS='-us -uc'".
 	(cd $(RELEASE) && debuild $(DEBUILDOPTS); cd -)
 
-$(RELEASE):
-	cp -r $(PRODUCT) $@
+$(RELEASE): $(PRODUCT)
+	mkdir $@
+	(cd $(PRODUCT); $(TAR_XVCS) -cf - .; cd -) | (cd $@ && tar xpf -)
 
 mostlyclean:
 	-rm -fr $(RELEASE)
