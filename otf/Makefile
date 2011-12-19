@@ -1,69 +1,48 @@
-#!/usr/bin/make
-# Usage: make clean all
-#        make pbuilder-test && ls -al /var/cache/pbuilder/result/
+#!/usr/bin/make -f
 
-## variables
+PACKAGE  = vfdata-otf-ptex
+DESTDIR  =
+TEXMF    = /usr/share/texmf
+TEXMF_TL = /usr/share/texmf-texlive
+FONTDIR  = $(DESTDIR)$(TEXMF)/fonts
+MAPDIRS  = $(DESTDIR)/etc/texmf/dvipdfm \
+           $(DESTDIR)/etc/texmf/dvipdfmx
+STYDIR   = $(DESTDIR)$(TEXMF)/ptex/platex/misc
+FONTDIR_TL= $(DESTDIR)$(TEXMF_TL)/fonts
+STYDIR_TL= $(DESTDIR)$(TEXMF_TL)/ptex/platex/misc
 
-# metadata
+all:
 
-PRODUCT = otf
-PACKAGE = $(shell head -n 1 $(PRODUCT)/debian/changelog \
-                  | cut -d' ' -f 1)
-VERSION = $(shell head -n 1 $(PRODUCT)/debian/changelog \
-                  | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\1/')
-DEBREV  = $(shell head -n 1 $(PRODUCT)/debian/changelog \
-                  | cut -d' ' -f 2 | sed 's/(\(.*\)-\(.*\))/\2/')
+.PHONY: all install clean
 
-# programs
+install: share
+	cp -r share/texmf/fonts/tfm/ptex/otf $(FONTDIR)/tfm/ptex/otf
+	cp -r share/texmf/fonts/vf/ptex/otf $(FONTDIR)/vf/ptex/otf
+	cp -r share/texmf/fonts/ofm/public/otf $(FONTDIR)/ofm/public/otf
+	for d in $(MAPDIRS); do \
+	  if [ -d $$d ]; then \
+	    cp -r share/texmf/doc/misc/otf/*.map $$d; \
+	  fi; \
+	done
+	cp -r share/texmf/tex/platex/misc/otf/*.sty $(STYDIR)/otf
+	ln -s share/texmf/fonts/tfm/ptex/otf $(FONTDIR_TL)/tfm/ptex/otf
+	ln -s share/texmf/fonts/vf/ptex/otf $(FONTDIR_TL)/vf/ptex/otf
+	ln -s share/texmf/fonts/ofm/public/otf $(FONTDIR_TL)/ofm/public/otf
+	ln -s share/texmf/ptex/platex/misc/otf $(STYDIR_TL)/otf
+	# hiraprop
+	cp -r share/texmf/fonts/tfm/ptex/hiraprop $(FONTDIR)/tfm/ptex/hiraprop
+	cp -r share/texmf/fonts/vf/ptex/hiraprop $(FONTDIR)/vf/ptex/hiraprop
+	cp -r share/texmf/tex/platex/misc/hiraprop/hiraprop.sty $(STYDIR)/hiraprop
+	cp -r share/texmf/tex/platex/misc/hiraprop/*.fd $(STYDIR)/hiraprop
+	ln -s share/texmf/fonts/tfm/ptex/hiraprop $(FONTDIR_TL)/tfm/ptex/hiraprop
+	ln -s share/texmf/fonts/vf/ptex/hiraprop $(FONTDIR_TL)/vf/ptex/hiraprop
+	ln -s share/texmf/tex/platex/misc/hiraprop $(STYDIR_TL)/hiraprop
+	# install hiraprop docs
+	cp -r share/texmf/doc/misc/hiraprop/*.txt $(DESTDIR)/usr/share/doc/$(PACKAGE)/hiraprop
+	cp -r share/texmf/doc/misc/hiraprop/*.tex $(DESTDIR)/usr/share/doc/$(PACKAGE)/hiraprop
 
-TAR_XVCS= tar --exclude=".svn" --exclude=".git" --exclude=".hg"
-DEBUILDOPTS= 
-PBUILDER=cowbuilder
-PBOPTS  = --hookdir pbuilder-hooks \
-          --bindmounts "/var/cache/pbuilder/result"
+share: otf.tar.bz2
+	tar -jxf otf.tar.bz2
 
-# files and directories
-
-RELEASE = $(PACKAGE)-$(VERSION)
-DEB     = $(PACKAGE)_$(VERSION)-$(DEBREV)
-
-## targets
-
-all: deb
-
-.PHONY: all deb pbuilder-build pbuilder-login pbuilder-test \
-	mostlyclean clean
-
-deb: $(DEB)_all.deb
-
-$(DEB)_all.deb: pbuilder-build
-	cp /var/cache/pbuilder/result/$@ ./
-
-pbuilder-build: $(DEB).dsc
-	@echo 'Type "make debuild-build" for .dsc, .tar.gz, or .tar.bz2.'
-	[ -f $(DEB).dsc ]
-	[ -f $(DEB).tar.gz ] || [ -f $(DEB).tar.bz2 ]
-	sudo $(PBUILDER) --build $(PBOPTS) $<
-
-pbuilder-login:
-	sudo $(PBUILDER) --login $(PBOPTS)
-
-pbuilder-test: $(DEB)_all.deb
-	sudo $(PBUILDER) --execute $(PBOPTS) -- \
-	pbuilder-hooks/test.sh $(PACKAGE) $(VERSION) $(DEBREV)
-
-$(DEB).dsc: $(RELEASE)
-	@echo To omit signing, type "make debuild DEBUILDOPTS='-us -uc'".
-	(cd $(RELEASE) && debuild $(DEBUILDOPTS); cd -)
-
-$(RELEASE): $(PRODUCT)
-	mkdir $@
-	(cd $(PRODUCT); $(TAR_XVCS) -cf - .; cd -) | (cd $@ && tar xpf -)
-
-mostlyclean:
-	-rm -fr $(RELEASE)
-	-rm -f $(DEB).tar.gz
-	-rm -f $(DEB)*.build $(DEB)*.changes
-
-clean: mostlyclean
-	-rm -f $(DEB)*.diff.gz $(DEB)*.dsc $(DEB)*.deb
+clean:
+	-rm -rf share/
