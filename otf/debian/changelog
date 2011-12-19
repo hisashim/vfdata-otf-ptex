@@ -1,3 +1,11 @@
+vfdata-otf-ptex (1.2.9-0+0hisashim9) unstable; urgency=low
+
+  * Reorganize directories and build scripts
+  * No feature change from 0+0hisashim8
+  * Port to its own repository
+
+ -- Hisashi Morita <hisashim@workbook.org>  Mon, 19 Dec 2011 23:52:26 +0900
+
 vfdata-otf-ptex (1.2.9-0+0hisashim8) unstable; urgency=low
 
   * Install *.map to /etc/texmf/dvipdfmx/ as well (for TeX Live 2009).
