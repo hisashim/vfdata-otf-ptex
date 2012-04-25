@@ -1,3 +1,11 @@
+vfdata-otf-ptex (1.2.9-0+0hisashim10) unstable; urgency=low
+
+  * Fix trivial misconfiguration with installation directories
+    - Remove redundant directories (e.g. otf/otf/ -> otf/).
+    - Fix links from texmf-texlive tree to texmf tree.
+
+ -- Hisashi Morita <hisashim@workbook.org>  Wed, 25 Apr 2012 23:26:18 +0900
+
 vfdata-otf-ptex (1.2.9-0+0hisashim9) unstable; urgency=low
 
   * Reorganize directories and build scripts
