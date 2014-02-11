@@ -1,3 +1,10 @@
+vfdata-otf-ptex (1.2.9-0+0hisashim11) unstable; urgency=low
+
+  * Add conflicts with texlive-lang-cjk. This private package is no
+    longer needed at last, thanks to the TeX Live maintainers.
+
+ -- Hisashi Morita <hisashim@workbook.org>  Tue, 11 Feb 2014 22:41:01 +0900
+
 vfdata-otf-ptex (1.2.9-0+0hisashim10) unstable; urgency=low
 
   * Fix trivial misconfiguration with installation directories

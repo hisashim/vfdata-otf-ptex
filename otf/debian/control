@@ -10,5 +10,6 @@ Architecture: all
 Depends: ptex-bin, dvipdfmx | texlive-base (>=2009-8), cmap-adobe-japan1, cmap-adobe-japan2
 Recommends: ghostscript, cmap-adobe-gb1, cmap-adobe-cns1, cmap-adobe-korea1
 Suggests: okumura-clsfiles
+Conflicts: texlive-lang-cjk (>=2011.20120410-1)
 Description: Virtual font files and macros to use OpenType fonts in pTeX
  Contains VF/TFM/OFM for OpenType fonts and otf.sty style file.
